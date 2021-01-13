@@ -75,6 +75,7 @@ fclean: clean
 re: fclean all
 #------------------------------------------------------------------------------#
 run: all
-	clear; ./${NAME}
+	clear;
+	@echo "./philo_one .. .. .. .. [..]"
 #------------------------------------------------------------------------------#
 .PHONY:	all clean clean fclean re debug asan run

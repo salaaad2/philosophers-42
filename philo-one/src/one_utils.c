@@ -28,7 +28,8 @@ void
     }
 }
 
-short ph_isfullnum(char *str)
+short
+	ph_isfullnum(char *str)
 {
     int i;
 
