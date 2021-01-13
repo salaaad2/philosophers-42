@@ -41,3 +41,14 @@ short
     }
     return (1);
 }
+
+void
+	ph_fills(int ac, char *av[], t_philo *ph)
+{
+    ph->max_ph = ph_atoi(av[1]);
+    ph->time_to_die = ph_atoi(av[2]);
+    ph->time_to_eat = ph_atoi(av[3]);
+    ph->time_to_sleep = ph_atoi(av[4]);
+    if (ac == 6)
+        ph->appetite = ph_atoi(av[5]);
+}

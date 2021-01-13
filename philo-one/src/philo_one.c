@@ -1,19 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <pthread.h>
 
 #include "one_utils.h"
 #include "philo_one.h"
-
-static void
-	ph_fills(int ac, char *av[], t_philo *ph)
-{
-    ph->max_ph = ph_atoi(av[1]);
-    ph->time_to_die = ph_atoi(av[2]);
-    ph->time_to_eat = ph_atoi(av[3]);
-    ph->time_to_sleep = ph_atoi(av[4]);
-    if (ac == 6)
-        ph->appetite = ph_atoi(av[5]);
-}
 
 static short
 	ph_init(int ac, char *av[], t_philo *ph)
@@ -34,6 +24,25 @@ static short
     return (0);
 }
 
+static void*
+	ph_act(void *ptr)
+{
+    t_philo *ph;
+
+    ph = (t_philo*)ptr;
+    printf("\ni am in a thread[%d]\n", ph->max_ph);
+    return (ptr);
+}
+
+void
+	ph_start(t_philo *ph)
+{
+    pthread_t pt;
+
+    pthread_create(&pt, NULL, ph_act, ph);
+    pthread_join(pt, NULL);
+}
+
 int
 	main(int ac, char *av[])
 {
@@ -51,6 +60,7 @@ int
             return (1);
         printf("[%d][%d][%d][%d][%d]", ph.max_ph, ph.time_to_die, ph.time_to_eat,
                ph.time_to_sleep, ph.appetite);
+        ph_start(&ph);
     }
     return (0);
 }
