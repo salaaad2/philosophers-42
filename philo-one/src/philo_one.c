@@ -30,7 +30,7 @@ static void*
     t_philo *ph;
 
     ph = (t_philo*)ptr;
-    printf("\ni am in a thread[%d]\n", ph->max_ph);
+    printf("\n%d is in a thread\n", ph->num);
     return (ptr);
 }
 
@@ -38,8 +38,23 @@ void
 	ph_start(t_philo *ph)
 {
     pthread_t pt;
+    t_philo **pht;
+    int i;
 
-    pthread_create(&pt, NULL, ph_act, ph);
+    i = 0;
+    pht = malloc(sizeof(t_philo) * ph->max_ph);
+    while (i < ph->max_ph)
+    {
+        pht[i] = malloc(sizeof(t_philo));
+        i++;
+    }
+    i = 0;
+    while (i < ph->max_ph)
+    {
+        pht[i]->num = i;
+        pthread_create(&pt, NULL, ph_act, pht[i]);
+        i++;
+    }
     pthread_join(pt, NULL);
 }
 
