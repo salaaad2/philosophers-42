@@ -14,7 +14,7 @@ static void*
 
     gettimeofday(&ctv, NULL);
     ph = (t_philo*)ptr;
-    printf("\n[%ld]%d is in a thread", ph_timest(1, ctv.tv_sec), ph->num);
+    printf("\n[%ld]%d is in a thread", ph_timest(1, (ctv.tv_sec * 1000) + (ctv.tv_usec / 1000)), ph->num);
     return (ptr);
 }
 
