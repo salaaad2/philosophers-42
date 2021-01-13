@@ -14,7 +14,7 @@ static void*
 
     gettimeofday(&ctv, NULL);
     ph = (t_philo*)ptr;
-    printf("\n[%ld]%d is in a thread", ph_timest(1, ctv.tv_usec), ph->num);
+    printf("\n[%ld]%d is in a thread", ph_timest(1, ctv.tv_sec), ph->num);
     return (ptr);
 }
 
@@ -26,14 +26,15 @@ void
     int i;
 
     i = 0;
-    pht = malloc(sizeof(t_philo) * *ph->max_ph);
-    while (i < *ph->max_ph)
+    pht = malloc(sizeof(t_philo) * ph->max_ph);
+    while (i < ph->max_ph)
     {
         pht[i] = malloc(sizeof(t_philo));
+        pht[i]->num = i;
         i++;
     }
     i = 0;
-    while (i < *ph->max_ph)
+    while (i < ph->max_ph)
     {
         pthread_create(&pt, NULL, ph_act, pht[i]);
         i++;
@@ -51,12 +52,9 @@ static short
     {
         if (!ph_isfullnum(av[i]))
             return (-1);
-        else
-        {
-            ph_fills(ac, av, ph);
-        }
         i++;
     }
+    ph_fills(ac, av, ph);
     return (0);
 }
 
