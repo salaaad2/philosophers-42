@@ -27,10 +27,10 @@ void
 
     i = 0;
     pht = malloc(sizeof(t_philo) * ph->max_ph);
-    while (i < ph->max_ph)
+    while (i <= ph->max_ph)
     {
         pht[i] = malloc(sizeof(t_philo));
-        pht[i]->num = i;
+        pht[i]->num = i + 1;
         i++;
     }
     i = 0;
@@ -73,8 +73,6 @@ int
         printf("[%d]\n", ph_atoi(av[2]));
         if (ph_init(ac, av, &ph) == -1)
             return (1);
-        /* printf("[%d][%d][%d][%d][%d]", ph.max_ph, ph.time_to_die, ph.time_to_eat, */
-        /*        ph.time_to_sleep, ph.appetite); */
         ph_start(&ph);
     }
     return (0);
