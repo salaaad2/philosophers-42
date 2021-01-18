@@ -19,22 +19,23 @@ static void*
 }
 
 void
-	ph_start(t_philo *ph)
+	ph_start(t_shared *sh)
 {
     pthread_t pt;
     t_philo **pht;
     int i;
 
     i = 0;
-    pht = malloc(sizeof(t_philo) * ph->max_ph);
-    while (i <= ph->max_ph)
+    pht = (t_philo **)malloc((sizeof(t_philo*) * *sh->max_ph));
+    while (i <= *sh->max_ph)
     {
         pht[i] = malloc(sizeof(t_philo));
         pht[i]->num = i + 1;
+        pht[i]->shared = sh;
         i++;
     }
     i = 0;
-    while (i < ph->max_ph)
+    while (i < *sh->max_ph)
     {
         pthread_create(&pt, NULL, ph_act, pht[i]);
         i++;
@@ -43,7 +44,7 @@ void
 }
 
 static short
-	ph_init(int ac, char *av[], t_philo *ph)
+	ph_init(int ac, char *av[], t_shared *sh)
 {
     int i;
 
@@ -54,14 +55,14 @@ static short
             return (-1);
         i++;
     }
-    ph_fills(ac, av, ph);
+    ph_fills(ac, av, sh);
     return (0);
 }
 
 int
 	main(int ac, char *av[])
 {
-    t_philo ph;
+    t_shared sh;
 
     if (ac <= 4 || ac >= 7)
     {
@@ -71,9 +72,9 @@ int
     else
     {
         printf("[%d]\n", ph_atoi(av[2]));
-        if (ph_init(ac, av, &ph) == -1)
+        if (ph_init(ac, av, &sh) == -1)
             return (1);
-        ph_start(&ph);
+        ph_start(&sh);
     }
     return (0);
 }

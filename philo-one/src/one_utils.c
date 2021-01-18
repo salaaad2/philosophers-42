@@ -2,6 +2,7 @@
 
 #include <unistd.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <sys/time.h>
 
 int
@@ -59,14 +60,27 @@ ph_timest(short status, long ct)
     return ((status == 0) ? ftime : ct - ftime);
 }
 
-void
-ph_fills(int ac, char *av[], t_philo *ph)
+short
+ph_fills(int ac, char *av[], t_shared *sh)
 {
-    ph->max_ph = ph_atoi(av[1]);
-    ph->time_to_die = ph_atoi(av[2]);
-    ph->time_to_eat = ph_atoi(av[3]);
-    ph->time_to_sleep = ph_atoi(av[4]);
-    ph->time = ph_timest(0, 0);
+    if (!(sh->max_ph = (int*)malloc(sizeof(int))))
+        return (-1);
+    if (!(sh->time_to_die = (int*)malloc(sizeof(int))))
+        return (-1);
+    if (!(sh->time_to_eat = (int*)malloc(sizeof(int))))
+        return (-1);
+    if (!(sh->time_to_sleep = (int*)malloc(sizeof(int))))
+        return (-1);
+    if (!(sh->time = (int*)malloc(sizeof(int))))
+        return (-1);
+    if (!(sh->appetite = (int*)malloc(sizeof(int))))
+        return (-1);
+    *sh->max_ph = ph_atoi(av[1]);
+    *sh->time_to_die = ph_atoi(av[2]);
+    *sh->time_to_eat = ph_atoi(av[3]);
+    *sh->time_to_sleep = ph_atoi(av[4]);
+    *sh->time = ph_timest(0, 0);
     if (ac == 6)
-        ph->appetite = ph_atoi(av[5]);
+        *sh->appetite = ph_atoi(av[5]);
+    return (0);
 }
