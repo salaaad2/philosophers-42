@@ -20,6 +20,7 @@ typedef struct	s_philo {
 	int		hasfork;
 	int		isthinking;
 	int		iseating;
+	int		issleeping;
 }				t_philo;
 
 #endif

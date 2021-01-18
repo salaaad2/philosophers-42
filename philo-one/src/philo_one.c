@@ -1,32 +1,19 @@
-#define _DEFAULT_SOURCE
-#include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <sys/time.h>
 #include <pthread.h>
 
 #include "one_utils.h"
+#include "one_actions.h"
 #include "philo_one.h"
 
 static void*
 	ph_act(void *ptr)
 {
     t_philo *ph;
-    struct timeval ctv;
 
     ph = (t_philo*)ptr;
-    pthread_mutex_lock(&ph->shared->pmt);
-    gettimeofday(&ctv, NULL);
-    printf("\n[%ld]%d is in a thread, he will eat for [%d] milliseconds soon", ph_timest(1, (ctv.tv_sec * 1000) +
-        (ctv.tv_usec / 1000)), ph->num, *ph->shared->time_to_eat);
-    ph->hasfork += 2;
-    ph->iseating = 1;
-    usleep(*ph->shared->time_to_eat);
-    printf("\n[%ld]%d is eating", ph_timest(1, (ctv.tv_sec * 1000) +
-        (ctv.tv_usec / 1000)), ph->num);
-    ph->hasfork -= 2;
-    ph->iseating = 0;
-    pthread_mutex_unlock(&ph->shared->pmt);
+    ph_eat(ph);
+    ph_sleep(ph);
     return (ptr);
 }
 

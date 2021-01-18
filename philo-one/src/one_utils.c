@@ -55,7 +55,6 @@ ph_timest(short status, long ct)
     {
         ftime = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
         printf("time was set : [%ld]", ftime);
-        sleep(1);
     }
     return ((status == 0) ? ftime : ct - ftime);
 }
