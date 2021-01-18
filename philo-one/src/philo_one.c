@@ -1,3 +1,5 @@
+#define _DEFAULT_SOURCE
+#include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <sys/time.h>
@@ -12,9 +14,19 @@ static void*
     t_philo *ph;
     struct timeval ctv;
 
-    gettimeofday(&ctv, NULL);
     ph = (t_philo*)ptr;
-    printf("\n[%ld]%d is in a thread", ph_timest(1, (ctv.tv_sec * 1000) + (ctv.tv_usec / 1000)), ph->num);
+    pthread_mutex_lock(&ph->shared->pmt);
+    gettimeofday(&ctv, NULL);
+    printf("\n[%ld]%d is in a thread, he will eat for [%d] milliseconds soon", ph_timest(1, (ctv.tv_sec * 1000) +
+        (ctv.tv_usec / 1000)), ph->num, *ph->shared->time_to_eat);
+    ph->hasfork += 2;
+    ph->iseating = 1;
+    usleep(*ph->shared->time_to_eat);
+    printf("\n[%ld]%d is eating", ph_timest(1, (ctv.tv_sec * 1000) +
+        (ctv.tv_usec / 1000)), ph->num);
+    ph->hasfork -= 2;
+    ph->iseating = 0;
+    pthread_mutex_unlock(&ph->shared->pmt);
     return (ptr);
 }
 
@@ -35,12 +47,18 @@ void
         i++;
     }
     i = 0;
+    if (pthread_mutex_init(&sh->pmt, NULL) != 0)
+    {
+        printf("\n mutex init failed\n");
+        return ;
+    }
     while (i < *sh->max_ph)
     {
         pthread_create(&pt, NULL, ph_act, pht[i]);
         i++;
     }
     pthread_join(pt, NULL);
+    pthread_mutex_destroy(&sh->pmt);
 }
 
 static short

@@ -65,11 +65,11 @@ ph_fills(int ac, char *av[], t_shared *sh)
 {
     if (!(sh->max_ph = (int*)malloc(sizeof(int))))
         return (-1);
-    if (!(sh->time_to_die = (int*)malloc(sizeof(int))))
+    if (!(sh->time_to_die = (unsigned int*)malloc(sizeof(unsigned int))))
         return (-1);
-    if (!(sh->time_to_eat = (int*)malloc(sizeof(int))))
+    if (!(sh->time_to_eat = (unsigned int*)malloc(sizeof(unsigned int))))
         return (-1);
-    if (!(sh->time_to_sleep = (int*)malloc(sizeof(int))))
+    if (!(sh->time_to_sleep = (unsigned int*)malloc(sizeof(unsigned int))))
         return (-1);
     if (!(sh->time = (int*)malloc(sizeof(int))))
         return (-1);
