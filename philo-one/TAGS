@@ -1,0 +1,66 @@
+
+src/philo_one.h,754
+# define PHILO_ONE_HPHILO_ONE_H2,20
+typedef struct		s_shareds_shared6,64
+	pthread_mutex_t	**forks;forks8,91
+	unsigned int	*time_to_die;time_to_die9,117
+	unsigned int	*time_to_eat;time_to_eat10,145
+	unsigned int	*time_to_sleep;time_to_sleep11,173
+	int				*max_ph;max_ph12,203
+	int				*appetite;appetite13,220
+	int				*time;time14,239
+}					t_shared;t_shared15,254
+typedef struct		s_philos_philo17,271
+	pthread_mutex_t *lfork;lfork19,297
+	pthread_mutex_t *rfork;rfork20,322
+	t_shared		*shared;shared21,347
+	long			time;time22,367
+	int				num;num23,381
+	int				hasfork;hasfork24,394
+	int				isthinking;isthinking25,411
+	int				iseating;iseating26,431
+	int				issleeping;issleeping27,449
+}					t_philo;t_philo28,469
+
+src/one_utils.h,37
+#define ONE_UTILS_HONE_UTILS_H2,20
+
+src/one_utils.c,224
+ph_atoi(char *str)ph_atoi9,110
+ft_putstr(char *str)ft_putstr22,270
+ph_isfullnum(char *str)ph_isfullnum34,389
+ph_timest(short status, long ct)ph_timest48,563
+ph_fills(int ac, char *av[], t_shared *sh)ph_fills63,872
+
+src/philo_one.c,167
+ph_act(void *ptr)ph_act10,146
+ph_start(t_shared *sh)ph_start21,253
+ph_init(int ac, char *av[], t_shared *sh)ph_init56,1163
+main(int ac, char *av[])main80,1601
+
+src/one_actions.c,155
+#define _DEFAULT_SOURCE_DEFAULT_SOURCE1,0
+ph_eat(t_philo *ph)ph_eat13,207
+ph_sleep(t_philo *ph)ph_sleep34,733
+ph_think(t_philo *ph)ph_think48,1041
+
+src/one_actions.h,41
+#define ONE_ACTIONS_HONE_ACTIONS_H2,22
+
+Makefile,684
+SHELL			:= /bin/shSHELL5,256
+SRCS_DIR		 = src/SRCS_DIR9,518
+OBJS_DIR		 = obj/OBJS_DIR10,536
+SRCS_NAME		 = philo_oneSRCS_NAME14,797
+SRCS			 = $(addprefix ${SRCS_DIR}, $(addsuffix .c, ${SRCS_NAME}))SRCS18,954
+INCS			 = $(addprefix ${SRCS_DIR}, $(addsuffix .h, ${INCS_NAME}))INCS20,1101
+OBJS			 = $(patsubst ${SRCS_DIR}%.c,${OBJS_DIR}%.o,${SRCS})OBJS23,1286
+NAME			 = philo_oneNAME25,1427
+CC				 = ccCC30,1771
+CFLAGS			 = -std=c89CFLAGS31,1783
+CDEFS			 = -D_POSIX_C_SOURCE=200112LCDEFS37,1965
+LDFLAGS			 = -lpthreadLDFLAGS39,2083
+RM				= rm -rfRM42,2268
+MKDIR			= mkdir -pMKDIR43,2283
+asan: LFTRULE = asanLFTRULE60,3145
+msan: LFTRULE = msanLFTRULE68,3427
