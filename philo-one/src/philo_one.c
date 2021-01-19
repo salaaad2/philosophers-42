@@ -26,7 +26,7 @@ void
 
     i = 0;
     pht = (t_philo **)malloc((sizeof(t_philo*) * *sh->max_ph));
-    while (i <= *sh->max_ph)
+    while (i < *sh->max_ph)
     {
         pht[i] = malloc(sizeof(t_philo));
         pht[i]->num = i + 1;
@@ -34,24 +34,25 @@ void
         i++;
     }
     i = 0;
-    if (pthread_mutex_init(&sh->pmt, NULL) != 0)
-    {
-        printf("\n mutex init failed\n");
-        return ;
-    }
     while (i < *sh->max_ph)
     {
+        pthread_mutex_init(pht[i]->lfork, NULL);
+        pthread_mutex_init(pht[i]->rfork, NULL);
+        pht[i]->lfork = pht[i]->shared->forks[i];
+        pht[i]->rfork = pht[i]->shared->forks[i + 1];
         pthread_create(&pt, NULL, ph_act, pht[i]);
         i++;
     }
     pthread_join(pt, NULL);
-    pthread_mutex_destroy(&sh->pmt);
+    pthread_mutex_destroy(pht[i]->lfork);
+    pthread_mutex_destroy(pht[i]->rfork);
 }
 
 static short
 	ph_init(int ac, char *av[], t_shared *sh)
 {
     int i;
+    pthread_mutex_t *mutarr;
 
     i = 1;
     while (i < ac)
@@ -61,6 +62,9 @@ static short
         i++;
     }
     ph_fills(ac, av, sh);
+    if (!(mutarr = (pthread_mutex_t*)malloc(sizeof(pthread_mutex_t) * *sh->max_ph)))
+        return (-1);
+    sh->forks = NULL;
     return (0);
 }
 

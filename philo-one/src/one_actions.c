@@ -14,7 +14,8 @@ ph_eat(t_philo *ph)
 {
     struct timeval ctv;
 
-    pthread_mutex_lock(&ph->shared->pmt);
+    pthread_mutex_lock(ph->lfork);
+    pthread_mutex_lock(ph->rfork);
     gettimeofday(&ctv, NULL);
     ph->hasfork += 2;
     ph->iseating = 1;
@@ -25,7 +26,8 @@ ph_eat(t_philo *ph)
     ph->iseating = 0;
     printf("\n[%ld]%d stopped eating", ph_timest(1, (ctv.tv_sec * 1000) +
         (ctv.tv_usec / 1000)), ph->num);
-    pthread_mutex_unlock(&ph->shared->pmt);
+    pthread_mutex_unlock(ph->lfork);
+    pthread_mutex_unlock(ph->rfork);
     return (0);
 }
 

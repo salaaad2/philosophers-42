@@ -3,8 +3,9 @@
 
 #include <pthread.h>
 
-typedef struct		s_shared {
-	pthread_mutex_t pmt;
+typedef struct		s_shared
+{
+	pthread_mutex_t	**forks;
 	unsigned int	*time_to_die;
 	unsigned int	*time_to_eat;
 	unsigned int	*time_to_sleep;
@@ -13,14 +14,17 @@ typedef struct		s_shared {
 	int				*time;
 }					t_shared;
 
-typedef struct	s_philo {
-	t_shared *shared;
-	long	time;
-	int		num;
-	int		hasfork;
-	int		isthinking;
-	int		iseating;
-	int		issleeping;
-}				t_philo;
+typedef struct		s_philo
+{
+	pthread_mutex_t *lfork;
+	pthread_mutex_t *rfork;
+	t_shared		*shared;
+	long			time;
+	int				num;
+	int				hasfork;
+	int				isthinking;
+	int				iseating;
+	int				issleeping;
+}					t_philo;
 
 #endif
