@@ -14,15 +14,23 @@ ph_eat(t_philo *ph)
 {
     struct timeval ctv;
 
-    pthread_mutex_lock(ph->lfork);
-    gettimeofday(&ctv, NULL);
-    ph->hasfork += 2;
-    ph->iseating = 1;
+    pthread_mutex_lock(ph->lfork); /* SEGV */
+    /* printf("\n[%p][%p]%d\n", (void*)ph->lfork, (void*)ph->rfork, ph->num); */
     printf("\n[%ld]%d is eating", ph_timest(1, (ctv.tv_sec * 1000) +
         (ctv.tv_usec / 1000)), ph->num);
+    gettimeofday(&ctv, NULL);
+    if ((ph_timest(1, ph_timest(1, (ctv.tv_sec * 1000) +
+        (ctv.tv_usec / 1000))) - ph->lastate)  > *ph->shared->time_to_die)
+    {
+        ph->shared->isdead = 1;
+        return (-1);
+    }
+    else
+    {
+        ph->lastate = ph_timest(1, (ctv.tv_sec * 1000) +
+                                (ctv.tv_usec / 1000));
+    }
     usleep(*ph->shared->time_to_eat);
-    ph->hasfork -= 2;
-    ph->iseating = 0;
     printf("\n[%ld]%d stopped eating", ph_timest(1, (ctv.tv_sec * 1000) +
         (ctv.tv_usec / 1000)), ph->num);
     pthread_mutex_unlock(ph->lfork);

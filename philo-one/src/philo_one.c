@@ -12,11 +12,14 @@ ph_act(void *ptr)
 	t_philo *ph;
 
 	ph = (t_philo*)ptr;
-	printf("num is acting :[%d]\n", ph->num);
-	ph_eat(ph);
-	ph_sleep(ph);
+	while (ph->shared->isdead == 0)
+	{
+		ph_eat(ph);
+		ph_sleep(ph);
+	}
 	return (ptr);
 }
+
 
 void
 ph_start(t_shared *sh)
@@ -32,27 +35,25 @@ ph_start(t_shared *sh)
 	while (i < *sh->max_ph)
 	{
 		pht[i] = (t_philo *)malloc(sizeof(t_philo));
-		pht[i]->lfork = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
-		pht[i]->rfork = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
 		pht[i]->num = i + 1;
 		pht[i]->shared = sh;
+		pthread_mutex_init(&forks[i], NULL);
 		i++;
 	}
 	i = 0;
 	while (i < *sh->max_ph)
 	{
-        printf("[%d]", i);
-		pthread_mutex_init(pht[i]->lfork, NULL);
-		pht[i]->lfork = pht[i]->shared->forks[i];
-		pthread_mutex_init(pht[i]->rfork, NULL);
-		pht[i]->rfork = (i == (*sh->max_ph - 1)) ? pht[i]->shared->forks[0] :
-            pht[i]->shared->forks[i + 1];
+		pht[i]->lfork = &forks[i];
+		pht[i]->rfork = (i == (*sh->max_ph - 1)) ? &forks[0] :
+            &forks[i + 1];
+		printf("[%p][%p]%d\n", (void*)pht[i]->lfork, (void*)pht[i]->rfork, i);
 		pthread_create(&pt, NULL, ph_act, pht[i]);
 		i++;
 	}
 	pthread_join(pt, NULL);
-	/* pthread_mutex_destroy(&pht[0]->lfork); */
-	/* pthread_mutex_destroy(&pht[i]->rfork); */
+	pthread_mutex_destroy(pht[0]->lfork);
+	pthread_mutex_destroy(pht[1]->rfork);
+	/* ph_free(sh, pht); */
 }
 
 static short
@@ -68,10 +69,6 @@ ph_init(int ac, char *av[], t_shared *sh)
 		i++;
 	}
 	ph_fills(ac, av, sh);
-    while (i < *sh->max_ph)
-    {
-        i++;
-	}
 	return (0);
 }
 

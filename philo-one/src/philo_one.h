@@ -2,6 +2,7 @@
 # define PHILO_ONE_H
 
 #include <pthread.h>
+#include <stdbool.h>
 
 typedef struct		s_shared
 {
@@ -12,6 +13,7 @@ typedef struct		s_shared
 	int				*max_ph;
 	int				*appetite;
 	int				*time;
+	bool			isdead;
 }					t_shared;
 
 typedef struct		s_philo
@@ -19,6 +21,7 @@ typedef struct		s_philo
 	pthread_mutex_t *lfork;
 	pthread_mutex_t *rfork;
 	t_shared		*shared;
+	long			lastate;
 	long			time;
 	int				num;
 	int				hasfork;

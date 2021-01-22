@@ -5,6 +5,27 @@
 #include <stdlib.h>
 #include <sys/time.h>
 
+/* short */
+/* ph_free(t_shared *sh, t_philo **pht) */
+/* { */
+/*     int i; */
+
+/*     i = 0; */
+/* 	while (i < *sh->max_ph) */
+/*     { */
+/*         free(sh->max_ph); */
+/*         free(sh->time_to_die); */
+/*         free(sh->time_to_eat); */
+/*         free(sh->time_to_sleep); */
+/*         free(sh->time); */
+/*         free(pht[i]->lfork); */
+/*         free(pht[i]->rfork); */
+/*         free(pht[i]); */
+/*         i++; */
+/*     } */
+/*     return (1); */
+/* } */
+
 int
 ph_atoi(char *str)
 {
