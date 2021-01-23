@@ -21,6 +21,7 @@ typedef struct		s_philo
 	pthread_mutex_t *lfork;
 	pthread_mutex_t *rfork;
 	t_shared		*shared;
+	bool			isdead;
 	long			lastate;
 	long			time;
 	int				num;

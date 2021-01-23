@@ -17,6 +17,7 @@ ph_act(void *ptr)
 		ph_eat(ph);
 		ph_sleep(ph);
 	}
+    printf("\n[%d]is preparing", ph->num);
 	return (ptr);
 }
 
