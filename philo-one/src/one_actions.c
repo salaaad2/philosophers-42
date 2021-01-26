@@ -1,6 +1,7 @@
 #define _DEFAULT_SOURCE
 #include <unistd.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <sys/time.h>
 #include <sys/time.h>
 #include <pthread.h>
@@ -18,8 +19,8 @@ ph_eat(t_philo *ph)
     if ((ph_timest(1, (ctv.tv_sec * 1000) +
         (ctv.tv_usec / 1000)) - ph->lastate) > *ph->shared->time_to_die)
     {
-        printf("this ones dead[%ld], [%d]\n", ph->lastate, *ph->shared->time_to_die);
-        return (-1);
+        printf("this ones[%d]dead[%ld], [%d]\n", ph->num, ph->lastate, *ph->shared->time_to_die);
+        ph->isdead = 1;
     }
     pthread_mutex_lock(ph->lfork);
     pthread_mutex_lock(ph->rfork);
@@ -27,14 +28,10 @@ ph_eat(t_philo *ph)
     printf("\n[%ld]%d is eating", ph_timest(1, (ctv.tv_sec * 1000) +
         (ctv.tv_usec / 1000)), ph->num);
     usleep(*ph->shared->time_to_eat * 1000);
-    gettimeofday(&ctv, NULL);
     ph->lastate = ph_timest(1, (ctv.tv_sec * 1000) +
         (ctv.tv_usec / 1000));
     pthread_mutex_unlock(ph->lfork);
     pthread_mutex_unlock(ph->rfork);
-    gettimeofday(&ctv, NULL);
-    printf("\n[%ld]%d stopped eating", ph_timest(1, (ctv.tv_sec * 1000) +
-        (ctv.tv_usec / 1000)), ph->num);
     return (0);
 }
 
@@ -45,9 +42,10 @@ ph_sleep(t_philo *ph)
     struct timeval ctv;
 
     gettimeofday(&ctv, NULL);
-    printf("\n[%ld]%d is now sleeping", ph_timest(1, (ctv.tv_sec * 1000) +
+    printf("\n[%ld]%d is sleeping", ph_timest(1, (ctv.tv_sec * 1000) +
         (ctv.tv_usec / 1000)), ph->num);
     usleep(*ph->shared->time_to_sleep * 1000);
+    gettimeofday(&ctv, NULL);
     return (0);
 }
 
@@ -57,7 +55,7 @@ ph_think(t_philo *ph)
     struct timeval ctv;
 
     gettimeofday(&ctv, NULL);
-    printf("\n[%ld]%d is now thinking", ph_timest(1, (ctv.tv_sec * 1000) +
+    printf("\n[%ld]%d is thinking", ph_timest(1, (ctv.tv_sec * 1000) +
         (ctv.tv_usec / 1000)), ph->num);
     return (0);
 }

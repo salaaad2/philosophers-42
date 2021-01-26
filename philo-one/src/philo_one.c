@@ -7,6 +7,21 @@
 #include "philo_one.h"
 
 static void*
+ph_check(void *ptr)
+{
+	t_philo *ph;
+
+	ph = (t_philo*)ptr;
+	while (1)
+	{
+		if (ph->isdead)
+		{
+			exit(1);
+		}
+	}
+}
+
+static void*
 ph_act(void *ptr)
 {
 	t_philo *ph;
@@ -49,6 +64,7 @@ ph_start(t_shared *sh)
             &forks[i + 1];
 		printf("\n[%p][%p]%d\n", (void*)pht[i]->lfork, (void*)pht[i]->rfork, i);
 		pthread_create(&pt, NULL, ph_act, pht[i]);
+		pthread_create(&pt, NULL, ph_check, pht[i]);
 		i++;
 	}
 	pthread_join(pt, NULL);
