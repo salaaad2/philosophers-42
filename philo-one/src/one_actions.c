@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/time.h>
-#include <sys/time.h>
 #include <pthread.h>
 
 #include "one_utils.h"
@@ -19,7 +18,6 @@ ph_eat(t_philo *ph)
     if ((ph_timest(1, (ctv.tv_sec * 1000) +
         (ctv.tv_usec / 1000)) - ph->lastate) > *ph->shared->time_to_die)
     {
-        printf("this ones[%d]dead[%ld], [%d]\n", ph->num, ph->lastate, *ph->shared->time_to_die);
         ph->isdead = 1;
     }
     pthread_mutex_lock(ph->lfork);

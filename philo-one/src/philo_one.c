@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <pthread.h>
+#include <sys/time.h>
 
 #include "one_utils.h"
 #include "one_actions.h"
@@ -10,12 +11,16 @@ static void*
 ph_check(void *ptr)
 {
 	t_philo *ph;
+    struct timeval ctv;
 
 	ph = (t_philo*)ptr;
 	while (1)
 	{
 		if (ph->isdead)
 		{
+			gettimeofday(&ctv, NULL);
+			printf("\n[%ld]%d died", ph_timest(1, (ctv.tv_sec * 1000) +
+				(ctv.tv_usec / 1000)), ph->num);
 			exit(1);
 		}
 	}
