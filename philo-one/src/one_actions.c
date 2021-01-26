@@ -15,8 +15,8 @@ ph_eat(t_philo *ph)
     struct timeval ctv;
 
     gettimeofday(&ctv, NULL);
-    printf("\n[%ld]%d is waiting for mutex to be unlocked", ph_timest(1, (ctv.tv_sec * 1000) +
-        (ctv.tv_usec / 1000)), ph->num);
+    /* printf("\n[%ld]%d is waiting for mutex to be unlocked", ph_timest(1, (ctv.tv_sec * 1000) + */
+    /*     (ctv.tv_usec / 1000)), ph->num); */
     pthread_mutex_lock(ph->lfork);
     pthread_mutex_lock(ph->rfork);
     gettimeofday(&ctv, NULL);
@@ -24,7 +24,7 @@ ph_eat(t_philo *ph)
         (ctv.tv_usec / 1000)), ph->num);
     ph->lastate = ph_timest(1, (ctv.tv_sec * 1000) +
         (ctv.tv_usec / 1000));
-    usleep(*ph->shared->time_to_eat);
+    usleep(*ph->shared->time_to_eat * 1000);
     pthread_mutex_unlock(ph->lfork);
     pthread_mutex_unlock(ph->rfork);
     printf("\n[%ld]%d stopped eating", ph_timest(1, (ctv.tv_sec * 1000) +
@@ -41,7 +41,7 @@ ph_sleep(t_philo *ph)
     gettimeofday(&ctv, NULL);
     printf("\n[%ld]%d is now sleeping", ph_timest(1, (ctv.tv_sec * 1000) +
         (ctv.tv_usec / 1000)), ph->num);
-    usleep(*ph->shared->time_to_sleep);
+    usleep(*ph->shared->time_to_sleep * 1000);
     return (0);
 }
 

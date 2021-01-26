@@ -12,9 +12,8 @@ ph_act(void *ptr)
 	t_philo *ph;
 
 	ph = (t_philo*)ptr;
-	while (ph->shared->isdead == 0)
+	while (1)
 	{
-		printf("\nnew cycle\n");
 		ph_eat(ph);
 		ph_sleep(ph);
 		ph_think(ph);
