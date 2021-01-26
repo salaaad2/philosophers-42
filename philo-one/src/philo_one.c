@@ -14,10 +14,11 @@ ph_act(void *ptr)
 	ph = (t_philo*)ptr;
 	while (ph->shared->isdead == 0)
 	{
+		printf("\nnew cycle\n");
 		ph_eat(ph);
 		ph_sleep(ph);
+		ph_think(ph);
 	}
-    printf("\n[%d]is preparing", ph->num);
 	return (ptr);
 }
 
@@ -47,13 +48,13 @@ ph_start(t_shared *sh)
 		pht[i]->lfork = &forks[i];
 		pht[i]->rfork = (i == (*sh->max_ph - 1)) ? &forks[0] :
             &forks[i + 1];
-		printf("[%p][%p]%d\n", (void*)pht[i]->lfork, (void*)pht[i]->rfork, i);
+		printf("\n[%p][%p]%d\n", (void*)pht[i]->lfork, (void*)pht[i]->rfork, i);
 		pthread_create(&pt, NULL, ph_act, pht[i]);
 		i++;
 	}
 	pthread_join(pt, NULL);
-	pthread_mutex_destroy(pht[0]->lfork);
-	pthread_mutex_destroy(pht[1]->rfork);
+	/* pthread_mutex_destroy(pht[0]->lfork); */
+	/* pthread_mutex_destroy(pht[1]->rfork); */
 	/* ph_free(sh, pht); */
 }
 

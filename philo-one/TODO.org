@@ -1,0 +1,5 @@
+#+TITLE: philo TODO LIST
+
+* thread to watch death
+** un par philo
+* recalibrate actions.
