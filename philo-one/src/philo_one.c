@@ -21,9 +21,10 @@ ph_check(void *ptr)
 			gettimeofday(&ctv, NULL);
 			printf("\n[%ld]%d died", ph_timest(1, (ctv.tv_sec * 1000) +
 				(ctv.tv_usec / 1000)), ph->num);
-			exit(1);
+			ph_free(ph->shared, &ph);
 		}
 	}
+	return (NULL);
 }
 
 static void*
@@ -40,7 +41,6 @@ ph_act(void *ptr)
 	}
 	return (ptr);
 }
-
 
 void
 ph_start(t_shared *sh)
@@ -73,9 +73,7 @@ ph_start(t_shared *sh)
 		i++;
 	}
 	pthread_join(pt, NULL);
-	/* pthread_mutex_destroy(pht[0]->lfork); */
-	/* pthread_mutex_destroy(pht[1]->rfork); */
-	/* ph_free(sh, pht); */
+	ph_free(sh, pht);
 }
 
 static short

@@ -1,5 +1,4 @@
 #+TITLE: philo TODO LIST
 
-* thread to watch death
-** un par philo
-* recalibrate actions.
+* [DONE] thread to watch death
+* CALIBRATION IT SUCKS RIGHT NOW
