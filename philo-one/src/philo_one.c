@@ -21,7 +21,8 @@ ph_check(void *ptr)
 			gettimeofday(&ctv, NULL);
 			printf("\n[%ld]%d died", ph_timest(1, (ctv.tv_sec * 1000) +
 				(ctv.tv_usec / 1000)), ph->num);
-			ph_free(ph->shared, &ph);
+			ph->shared->isdead = 1;
+			return (NULL);
 		}
 	}
 	return (NULL);
@@ -58,15 +59,17 @@ ph_start(t_shared *sh)
 		pht[i] = (t_philo *)malloc(sizeof(t_philo));
 		pht[i]->num = i + 1;
 		pht[i]->shared = sh;
+		pht[i]->isdead = 0;
 		pthread_mutex_init(&forks[i], NULL);
 		i++;
 	}
 	i = 0;
-	while (i < *sh->max_ph)
+	while (i < *sh->max_ph && (sh->isdead == 0))
 	{
 		pht[i]->lfork = &forks[i];
 		pht[i]->rfork = (i == (*sh->max_ph - 1)) ? &forks[0] :
             &forks[i + 1];
+		pht[i]->lastate = 0;
 		printf("\n[%p][%p]%d\n", (void*)pht[i]->lfork, (void*)pht[i]->rfork, i);
 		pthread_create(&pt, NULL, ph_act, pht[i]);
 		pthread_create(&pt, NULL, ph_check, pht[i]);
