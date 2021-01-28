@@ -60,6 +60,8 @@ ph_start(t_shared *sh)
 		pht[i]->num = i + 1;
 		pht[i]->shared = sh;
 		pht[i]->isdead = 0;
+		if (*sh->appetite != -1)
+			pht[i]->ate = 0;
 		pthread_mutex_init(&forks[i], NULL);
 		i++;
 	}

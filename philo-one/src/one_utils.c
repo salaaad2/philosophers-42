@@ -14,7 +14,7 @@ ph_free(t_shared *sh, t_philo **pht)
     while (++i < *sh->max_ph)
     {
         free(pht[i]);
-    }
+   }
     free(sh->max_ph);
     free(sh->time_to_die);
     free(sh->time_to_eat);
@@ -104,5 +104,7 @@ ph_fills(int ac, char *av[], t_shared *sh)
     sh->isdead = 0;
     if (ac == 6)
         *sh->appetite = ph_atoi(av[5]);
+    else
+        *sh->appetite = -1;
     return (0);
 }

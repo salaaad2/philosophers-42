@@ -19,7 +19,12 @@ ph_eat(t_philo *ph)
         (ctv.tv_usec / 1000)) - ph->lastate) > *ph->shared->time_to_die)
     {
         ph->isdead = 1;
+        return (1);
     }
+    if (*ph->shared->appetite != -1)
+        ph->ate++;
+    if (*ph->ate == *ph->shared->appetite)
+        ph->isfull = 1;
     pthread_mutex_lock(ph->lfork);
     pthread_mutex_lock(ph->rfork);
     gettimeofday(&ctv, NULL);

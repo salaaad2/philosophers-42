@@ -14,6 +14,7 @@ typedef struct		s_shared
 	int				*appetite;
 	int				*time;
 	bool			isdead;
+	bool			allfull;
 }					t_shared;
 
 typedef struct		s_philo
@@ -22,13 +23,11 @@ typedef struct		s_philo
 	pthread_mutex_t *rfork;
 	t_shared		*shared;
 	bool			isdead;
+	bool			isfull;
 	long			lastate;
 	long			time;
 	int				num;
-	int				hasfork;
-	int				isthinking;
-	int				iseating;
-	int				issleeping;
+	int				ate;
 }					t_philo;
 
 #endif
