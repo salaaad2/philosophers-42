@@ -34,7 +34,7 @@ ph_act(void *ptr)
 	t_philo *ph;
 
 	ph = (t_philo*)ptr;
-	while (1)
+	while (!ph->shared->isdead)
 	{
 		ph_eat(ph);
 		ph_sleep(ph);

@@ -16,7 +16,7 @@ ph_eat(t_philo *ph)
 
     gettimeofday(&ctv, NULL);
     if ((ph_timest(1, (ctv.tv_sec * 1000) +
-        (ctv.tv_usec / 1000)) - ph->lastate) > *ph->shared->time_to_die)
+                   (ctv.tv_usec / 1000)) - ph->lastate) > *ph->shared->time_to_die)
     {
         ph->isdead = 1;
         return (1);
