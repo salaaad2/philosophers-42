@@ -16,7 +16,7 @@ ph_eat(t_philo *ph)
 
     gettimeofday(&ctv, NULL);
     if ((ph_timest(1, (ctv.tv_sec * 1000) +
-                   (ctv.tv_usec / 1000)) - ph->lastate) > *ph->shared->time_to_die)
+        (ctv.tv_usec / 1000)) - ph->lastate) > *ph->shared->time_to_die)
     {
         ph->isdead = 1;
         return (1);
@@ -25,12 +25,11 @@ ph_eat(t_philo *ph)
         ph->ate++;
     if (ph->ate == *ph->shared->appetite)
         ph->isfull = 1;
-    printf("\n%d is preparing", ph->num);
     pthread_mutex_lock(ph->lfork);
     pthread_mutex_lock(ph->rfork);
     gettimeofday(&ctv, NULL);
     printf("\n[%ld]%d is eating", ph_timest(1, (ctv.tv_sec * 1000) +
-                                            (ctv.tv_usec / 1000)), ph->num);
+        (ctv.tv_usec / 1000)), ph->num);
     usleep(*ph->shared->time_to_eat * 1000);
     ph->lastate = ph_timest(1, (ctv.tv_sec * 1000) +
         (ctv.tv_usec / 1000));
@@ -49,7 +48,6 @@ ph_sleep(t_philo *ph)
     printf("\n[%ld]%d is sleeping", ph_timest(1, (ctv.tv_sec * 1000) +
         (ctv.tv_usec / 1000)), ph->num);
     usleep(*ph->shared->time_to_sleep * 1000);
-    gettimeofday(&ctv, NULL);
     return (0);
 }
 

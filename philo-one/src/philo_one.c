@@ -14,7 +14,7 @@ ph_check(void *ptr)
     struct timeval ctv;
 
 	ph = (t_philo*)ptr;
-	while (!ph->shared->isdead)
+	while (ph->shared->isdead == 0)
 	{
 		if (ph->isdead)
 		{
@@ -51,31 +51,29 @@ ph_start(t_shared *sh)
 	t_philo **pht;
 	int i;
 
-	i = 0;
-	pht = (t_philo **)malloc((sizeof(t_philo*) * *sh->max_ph));
+	if (!(pht = (t_philo **)malloc((sizeof(t_philo*) * *sh->max_ph))))
+		return ;
 	sh->forks = (pthread_mutex_t**)&forks;
-	while (i < *sh->max_ph)
+	i = -1;
+	while (++i < *sh->max_ph)
 	{
 		pht[i] = (t_philo *)malloc(sizeof(t_philo));
 		pht[i]->num = i + 1;
-		pht[i]->shared = sh;
 		pht[i]->isdead = 0;
+		pht[i]->lastate = 0;
 		if (*sh->appetite != -1)
 			pht[i]->ate = 0;
+		pht[i]->shared = sh;
 		pthread_mutex_init(&forks[i], NULL);
-		i++;
-	}
-	i = 0;
-	while (i < *sh->max_ph && sh->isdead == 0)
-	{
 		pht[i]->lfork = &forks[i];
 		pht[i]->rfork = (i == (*sh->max_ph - 1)) ? &forks[0] :
             &forks[i + 1];
-		pht[i]->lastate = 0;
-		printf("\n[%p][%p]%d\n", (void*)pht[i]->lfork, (void*)pht[i]->rfork, i);
+	}
+	i = -1;
+	while (++i < *sh->max_ph && sh->isdead == 0)
+	{
 		pthread_create(&pt, NULL, ph_act, pht[i]);
 		pthread_create(&pt, NULL, ph_check, pht[i]);
-		i++;
 	}
 	pthread_join(pt, NULL);
 	ph_free(sh, pht);
@@ -109,7 +107,6 @@ main(int ac, char *av[])
 	}
 	else
 	{
-		printf("[%d]\n", ph_atoi(av[2]));
 		if (ph_init(ac, av, &sh) == -1)
 			return (1);
 		ph_start(&sh);
