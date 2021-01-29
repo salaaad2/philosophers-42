@@ -14,6 +14,7 @@ ph_free(t_shared *sh, t_philo **pht)
     while (++i < *sh->max_ph)
     {
         free(pht[i]);
+		pthread_mutex_destroy(sh->forks[i]);
     }
     free(sh->max_ph);
     free(sh->time_to_die);
