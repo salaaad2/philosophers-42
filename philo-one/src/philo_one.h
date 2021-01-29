@@ -1,8 +1,8 @@
 #ifndef PHILO_ONE_H
 # define PHILO_ONE_H
 
-#include <pthread.h>
-#include <stdbool.h>
+# include <pthread.h>
+# include <stdbool.h>
 
 typedef struct		s_shared
 {

@@ -8,10 +8,10 @@
 #include "philo_one.h"
 
 static void*
-ph_check(void *ptr)
+	ph_check(void *ptr)
 {
-	t_philo *ph;
-    struct timeval ctv;
+	t_philo			*ph;
+	struct timeval	ctv;
 
 	ph = (t_philo*)ptr;
 	while (ph->shared->isdead == 0)
@@ -20,7 +20,7 @@ ph_check(void *ptr)
 		{
 			gettimeofday(&ctv, NULL);
 			printf("\n[%ld]%d died", ph_timest(1, (ctv.tv_sec * 1000) +
-				(ctv.tv_usec / 1000)), ph->num);
+						(ctv.tv_usec / 1000)), ph->num);
 			ph->shared->isdead = 1;
 			return (NULL);
 		}
@@ -29,7 +29,7 @@ ph_check(void *ptr)
 }
 
 static void*
-ph_act(void *ptr)
+	ph_act(void *ptr)
 {
 	t_philo *ph;
 
@@ -44,12 +44,12 @@ ph_act(void *ptr)
 }
 
 void
-ph_start(t_shared *sh)
+	ph_start(t_shared *sh)
 {
-	pthread_mutex_t forks[*sh->max_ph];
-	pthread_t pt;
-	t_philo **pht;
-	int i;
+	pthread_mutex_t	forks[*sh->max_ph];
+	pthread_t		pt;
+	t_philo			**pht;
+	int				i;
 
 	if (!(pht = (t_philo **)malloc((sizeof(t_philo*) * *sh->max_ph))))
 		return ;
@@ -67,7 +67,7 @@ ph_start(t_shared *sh)
 		pthread_mutex_init(&forks[i], NULL);
 		pht[i]->lfork = &forks[i];
 		pht[i]->rfork = (i == (*sh->max_ph - 1)) ? &forks[0] :
-            &forks[i + 1];
+			&forks[i + 1];
 	}
 	i = -1;
 	while (++i < *sh->max_ph && sh->isdead == 0)
@@ -80,7 +80,7 @@ ph_start(t_shared *sh)
 }
 
 static short
-ph_init(int ac, char *av[], t_shared *sh)
+	ph_init(int ac, char *av[], t_shared *sh)
 {
 	int i;
 
@@ -96,7 +96,7 @@ ph_init(int ac, char *av[], t_shared *sh)
 }
 
 int
-main(int ac, char *av[])
+	main(int ac, char *av[])
 {
 	t_shared sh;
 

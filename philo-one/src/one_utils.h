@@ -1,7 +1,7 @@
 #ifndef ONE_UTILS_H
-#define ONE_UTILS_H
+# define ONE_UTILS_H
 
-#include "philo_one.h"
+# include "philo_one.h"
 
 void	ft_putstr(char *str);
 short	ph_isfullnum(char *str);
