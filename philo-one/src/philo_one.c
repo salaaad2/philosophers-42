@@ -40,6 +40,8 @@ ph_act(void *ptr)
 		ph_sleep(ph);
 		ph_think(ph);
 	}
+    pthread_mutex_unlock(ph->lfork);
+    pthread_mutex_unlock(ph->rfork);
 	return (ptr);
 }
 
