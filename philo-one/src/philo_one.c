@@ -14,7 +14,7 @@ ph_check(void *ptr)
     struct timeval ctv;
 
 	ph = (t_philo*)ptr;
-	while (1)
+	while (!ph->shared->isdead)
 	{
 		if (ph->isdead)
 		{
@@ -34,14 +34,12 @@ ph_act(void *ptr)
 	t_philo *ph;
 
 	ph = (t_philo*)ptr;
-	while (!ph->shared->isdead)
+	while (1)
 	{
 		ph_eat(ph);
 		ph_sleep(ph);
 		ph_think(ph);
 	}
-    pthread_mutex_unlock(ph->lfork);
-    pthread_mutex_unlock(ph->rfork);
 	return (ptr);
 }
 

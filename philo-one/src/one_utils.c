@@ -22,6 +22,7 @@ ph_free(t_shared *sh, t_philo **pht)
     free(sh->time);
     free(sh->appetite);
     printf("FREED ALL PHILOSOPHERS");
+    exit(1);
     return (1);
 }
 

@@ -25,6 +25,7 @@ ph_eat(t_philo *ph)
         ph->ate++;
     if (ph->ate == *ph->shared->appetite)
         ph->isfull = 1;
+    printf("\n%d is preparing", ph->num);
     pthread_mutex_lock(ph->lfork);
     pthread_mutex_lock(ph->rfork);
     gettimeofday(&ctv, NULL);
@@ -32,7 +33,7 @@ ph_eat(t_philo *ph)
                                             (ctv.tv_usec / 1000)), ph->num);
     usleep(*ph->shared->time_to_eat * 1000);
     ph->lastate = ph_timest(1, (ctv.tv_sec * 1000) +
-                            (ctv.tv_usec / 1000));
+        (ctv.tv_usec / 1000));
     pthread_mutex_unlock(ph->lfork);
     pthread_mutex_unlock(ph->rfork);
     return (0);
