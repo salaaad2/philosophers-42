@@ -66,7 +66,7 @@ ph_start(t_shared *sh)
 		i++;
 	}
 	i = 0;
-	while (i < *sh->max_ph && (sh->isdead == 0))
+	while (i < *sh->max_ph && sh->isdead == 0)
 	{
 		pht[i]->lfork = &forks[i];
 		pht[i]->rfork = (i == (*sh->max_ph - 1)) ? &forks[0] :
