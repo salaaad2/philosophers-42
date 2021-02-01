@@ -4,6 +4,8 @@
 #include <semaphore.h>
 #include <fcntl.h>
 
-sem_t	*ph_open_sem(char c, int status);
+#include "philo_two.h"
 
-#endif // SEM_TWO_H
+int ph_open_sem(t_shared *ph, int max_ph);
+
+#endif

@@ -48,14 +48,16 @@ ph_act(void *ptr)
 void
 ph_start(t_shared *sh)
 {
-	sem_t forks[*sh->max_ph];
+	sem_t forks;
 	pthread_t pt;
 	t_philo **pht;
 	int i;
 
 	i = 0;
 	pht = (t_philo **)malloc((sizeof(t_philo*) * *sh->max_ph));
-	sh->forks = (sem_t**)&forks;
+	if (!pht)
+		return ;
+	sh->forks = (sem_t*)&forks;
 	while (i < *sh->max_ph)
 	{
 		pht[i] = (t_philo *)malloc(sizeof(t_philo));
@@ -63,7 +65,8 @@ ph_start(t_shared *sh)
 		pht[i]->shared = sh;
 		pht[i]->isdead = 0;
 		pht[i]->lastate = 0;
-		ph_open_sem(i, *sh->max_ph);
+		if (!ph_open_sem(sh, *sh->max_ph))
+			return ;
 		i++;
 	}
 	i = 0;

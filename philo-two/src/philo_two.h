@@ -10,7 +10,7 @@ typedef struct		s_shared
 	unsigned int	*time_to_die;
 	unsigned int	*time_to_eat;
 	unsigned int	*time_to_sleep;
-	sem_t			**forks;
+	sem_t			*forks;
 	int				*max_ph;
 	int				*time;
 	bool			isdead;

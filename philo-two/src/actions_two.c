@@ -22,13 +22,15 @@ ph_eat(t_philo *ph)
         ph->isdead = 1;
         return (1);
     }
+    sem_wait(ph->shared->forks);
+    sem_wait(ph->shared->forks);
     gettimeofday(&ctv, NULL);
-    sem_wait(ph->shared->forks[ph->num]);
     printf("\n[%ld]%d is eating", ph_timest(1, (ctv.tv_sec * 1000) +
     usleep(*ph->shared->time_to_eat * 1000)), ph->num);
     ph->lastate = ph_timest(1, (ctv.tv_sec * 1000) +
                             (ctv.tv_usec / 1000));
-    sem_wait(ph->shared->forks[ph->num]);
+    sem_post(ph->shared->forks);
+    sem_post(ph->shared->forks);
     return (0);
 }
 

@@ -1,8 +1,10 @@
 #include "sem_two.h"
 
-sem_t *
-ph_open_sem(char c, int status)
+int
+ph_open_sem(t_shared *sh, int max_ph)
 {
-    sem_unlink((char*)&c);
-    return (sem_open((char*)&c, O_CREAT | O_EXCL, 0644, status));
+    if ((sh->forks = sem_open("/forks", O_CREAT, 0777, max_ph)) == SEM_FAILED
+        || sem_unlink("/forks"))
+        return (1);
+    return (1);
 }
