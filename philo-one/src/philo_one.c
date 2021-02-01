@@ -3,8 +3,8 @@
 #include <pthread.h>
 #include <sys/time.h>
 
-#include "one_utils.h"
-#include "one_actions.h"
+#include "utils.h"
+#include "actions.h"
 #include "philo_one.h"
 
 static void*
