@@ -3,7 +3,17 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <fcntl.h>
 #include <sys/time.h>
+
+int
+ph_sem_init(t_shared *sh, int number)
+{
+	if ((sh->forks = sem_open("/forks", O_CREAT, 0777, number)) == SEM_FAILED
+		|| sem_unlink("/forks"))
+		return (0);
+	return (1);
+}
 
 short
 	ph_free(t_shared *sh, t_philo **pht)

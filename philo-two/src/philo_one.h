@@ -1,17 +1,18 @@
 #ifndef PHILO_ONE_H
 # define PHILO_ONE_H
 
-#include <pthread.h>
-#include <semaphore.h>
-#include <stdbool.h>
+# include <pthread.h>
+# include <stdbool.h>
+# include <semaphore.h>
 
 typedef struct		s_shared
 {
+	sem_t			*forks;
 	unsigned int	*time_to_die;
 	unsigned int	*time_to_eat;
 	unsigned int	*time_to_sleep;
-	sem_t			*forks;
 	int				*max_ph;
+	int				*appetite;
 	int				*time;
 	bool			isdead;
 	bool			allfull;
@@ -25,6 +26,7 @@ typedef struct		s_philo
 	long			lastate;
 	long			time;
 	int				num;
+	int				ate;
 }					t_philo;
 
 #endif
