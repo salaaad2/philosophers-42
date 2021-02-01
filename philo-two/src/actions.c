@@ -5,9 +5,9 @@
 #include <sys/time.h>
 #include <pthread.h>
 
-#include "one_utils.h"
-#include "one_actions.h"
-#include "philo_one.h"
+#include "utils.h"
+#include "actions.h"
+#include "philo_two.h"
 
 short
 	ph_eat(t_philo *ph)

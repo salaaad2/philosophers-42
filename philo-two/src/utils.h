@@ -1,7 +1,7 @@
 #ifndef ONE_UTILS_H
 # define ONE_UTILS_H
 
-# include "philo_one.h"
+# include "philo_two.h"
 
 int	ph_sem_init(t_shared *sh, int number);
 void	ft_putstr(char *str);
