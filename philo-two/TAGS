@@ -1,0 +1,70 @@
+
+src/philo_one.h,848
+# define PHILO_ONE_HPHILO_ONE_H2,20
+typedef struct		s_shareds_shared7,85
+	pthread_mutex_t	**forks;forks9,112
+	unsigned int	*time_to_die;time_to_die10,138
+	unsigned int	*time_to_eat;time_to_eat11,166
+	unsigned int	*time_to_sleep;time_to_sleep12,194
+	int				*max_ph;max_ph13,224
+	int				*appetite;appetite14,241
+	int				*time;time15,260
+	bool			isdead;isdead16,275
+}					t_shared;t_shared17,291
+typedef struct		s_philos_philo19,308
+	pthread_mutex_t *lfork;lfork21,334
+	pthread_mutex_t *rfork;rfork22,359
+	t_shared		*shared;shared23,384
+	bool			isdead;isdead24,404
+	long			lastate;lastate25,420
+	long			time;time26,437
+	int				num;num27,451
+	int				hasfork;hasfork28,464
+	int				isthinking;isthinking29,481
+	int				iseating;iseating30,501
+	int				issleeping;issleeping31,519
+}					t_philo;t_philo32,539
+
+src/one_utils.h,37
+#define ONE_UTILS_HONE_UTILS_H2,20
+
+src/one_utils.c,277
+ph_free(t_shared *sh, t_philo **pht)ph_free9,112
+ph_atoi(char *str)ph_atoi23,366
+ft_putstr(char *str)ft_putstr36,526
+ph_isfullnum(char *str)ph_isfullnum48,645
+ph_timest(short status, long ct)ph_timest62,819
+ph_fills(int ac, char *av[], t_shared *sh)ph_fills77,1128
+
+src/philo_one.c,203
+ph_check(void *ptr)ph_check11,168
+ph_act(void *ptr)ph_act31,483
+ph_start(t_shared *sh)ph_start46,625
+ph_init(int ac, char *av[], t_shared *sh)ph_init80,1392
+main(int ac, char *av[])main96,1569
+
+src/one_actions.c,155
+#define _DEFAULT_SOURCE_DEFAULT_SOURCE1,0
+ph_eat(t_philo *ph)ph_eat13,205
+ph_sleep(t_philo *ph)ph_sleep38,874
+ph_think(t_philo *ph)ph_think51,1167
+
+src/one_actions.h,41
+#define ONE_ACTIONS_HONE_ACTIONS_H2,22
+
+Makefile,648
+SHELL			:= /bin/shSHELL5,256
+SRCS_DIR		 = src/SRCS_DIR9,518
+OBJS_DIR		 = obj/OBJS_DIR10,536
+SRCS_NAME		 = philo_oneSRCS_NAME14,797
+SRCS			 = $(addprefix ${SRCS_DIR}, $(addsuffix .c, ${SRCS_NAME}))SRCS18,954
+INCS			 = $(addprefix ${SRCS_DIR}, $(addsuffix .h, ${INCS_NAME}))INCS20,1101
+OBJS			 = $(patsubst ${SRCS_DIR}%.c,${OBJS_DIR}%.o,${SRCS})OBJS23,1286
+NAME			 = philo_oneNAME25,1427
+CC				 = ccCC30,1771
+CDEFS			 = -D_POSIX_C_SOURCE=200112LCDEFS37,1966
+LDFLAGS			 = -lpthreadLDFLAGS39,2084
+RM				= rm -rfRM42,2269
+MKDIR			= mkdir -pMKDIR43,2284
+asan: LFTRULE = asanLFTRULE60,3146
+msan: LFTRULE = msanLFTRULE68,3428
