@@ -1,70 +1,76 @@
 
-src/philo_one.h,848
+src/actions.h,42
+# define ONE_ACTIONS_HONE_ACTIONS_H2,22
+
+src/utils.h,38
+# define ONE_UTILS_HONE_UTILS_H2,20
+
+src/utils.c,341
+ph_sem_init(t_shared *sh, int number)ph_sem_init10,125
+	ph_free(t_shared *sh, t_philo **pht)ph_free19,303
+	ph_atoi(char *str)ph_atoi40,606
+	ft_putstr(char *str)ft_putstr53,740
+	ph_isfullnum(char *str)ph_isfullnum63,833
+	ph_timest(short status, long ct)ph_timest77,975
+	ph_fills(int ac, char *av[], t_shared *sh)ph_fills92,1253
+
+src/philo_two.h,976
 # define PHILO_ONE_HPHILO_ONE_H2,20
-typedef struct		s_shareds_shared7,85
-	pthread_mutex_t	**forks;forks9,112
-	unsigned int	*time_to_die;time_to_die10,138
-	unsigned int	*time_to_eat;time_to_eat11,166
-	unsigned int	*time_to_sleep;time_to_sleep12,194
-	int				*max_ph;max_ph13,224
-	int				*appetite;appetite14,241
-	int				*time;time15,260
-	bool			isdead;isdead16,275
-}					t_shared;t_shared17,291
-typedef struct		s_philos_philo19,308
-	pthread_mutex_t *lfork;lfork21,334
-	pthread_mutex_t *rfork;rfork22,359
-	t_shared		*shared;shared23,384
-	bool			isdead;isdead24,404
-	long			lastate;lastate25,420
-	long			time;time26,437
-	int				num;num27,451
-	int				hasfork;hasfork28,464
-	int				isthinking;isthinking29,481
-	int				iseating;iseating30,501
-	int				issleeping;issleeping31,519
-}					t_philo;t_philo32,539
+# define PHILO_EAT PHILO_EAT4,42
+# define PHILO_FORKT PHILO_FORKT5,73
+# define PHILO_FORKP PHILO_FORKP6,113
+# define PHILO_SLEEP PHILO_SLEEP7,156
+# define PHILO_THINK PHILO_THINK8,191
+# define PHILO_DEATH PHILO_DEATH9,226
+typedef struct		s_shareds_shared15,324
+	sem_t			*forks;forks17,351
+	sem_t			*speaks;speaks18,368
+	unsigned int	*time_to_die;time_to_die19,386
+	unsigned int	*time_to_eat;time_to_eat20,414
+	unsigned int	*time_to_sleep;time_to_sleep21,442
+	int				*max_ph;max_ph22,472
+	int				*appetite;appetite23,489
+	int				*time;time24,508
+	bool			isdead;isdead25,523
+	bool			allfull;allfull26,539
+}					t_shared;t_shared27,556
+typedef struct		s_philos_philo29,573
+	t_shared		*shared;shared31,599
+	bool			isdead;isdead32,619
+	bool			isfull;isfull33,635
+	long			lastate;lastate34,651
+	long			time;time35,668
+	int				num;num36,682
+	int				ate;ate37,695
+}					t_philo;t_philo38,708
 
-src/one_utils.h,37
-#define ONE_UTILS_HONE_UTILS_H2,20
-
-src/one_utils.c,277
-ph_free(t_shared *sh, t_philo **pht)ph_free9,112
-ph_atoi(char *str)ph_atoi23,366
-ft_putstr(char *str)ft_putstr36,526
-ph_isfullnum(char *str)ph_isfullnum48,645
-ph_timest(short status, long ct)ph_timest62,819
-ph_fills(int ac, char *av[], t_shared *sh)ph_fills77,1128
-
-src/philo_one.c,203
-ph_check(void *ptr)ph_check11,168
-ph_act(void *ptr)ph_act31,483
-ph_start(t_shared *sh)ph_start46,625
-ph_init(int ac, char *av[], t_shared *sh)ph_init80,1392
-main(int ac, char *av[])main96,1569
-
-src/one_actions.c,155
+src/actions.c,231
 #define _DEFAULT_SOURCE_DEFAULT_SOURCE1,0
-ph_eat(t_philo *ph)ph_eat13,205
-ph_sleep(t_philo *ph)ph_sleep38,874
-ph_think(t_philo *ph)ph_think51,1167
+	ph_speak(long ts, int nb, char *message, t_shared *sh)ph_speak13,197
+	ph_eat(t_philo *ph)ph_eat22,365
+	ph_sleep(t_philo *ph)ph_sleep52,1111
+	ph_think(t_philo *ph)ph_think64,1356
 
-src/one_actions.h,41
-#define ONE_ACTIONS_HONE_ACTIONS_H2,22
+src/philo_two.c,208
+	ph_check(void *ptr)ph_check12,183
+	ph_act(void *ptr)ph_act33,538
+	ph_start(t_shared *sh)ph_start48,681
+	ph_init(int ac, char *av[], t_shared *sh)ph_init81,1347
+	main(int ac, char *av[])main97,1525
 
 Makefile,648
 SHELL			:= /bin/shSHELL5,256
 SRCS_DIR		 = src/SRCS_DIR9,518
 OBJS_DIR		 = obj/OBJS_DIR10,536
-SRCS_NAME		 = philo_oneSRCS_NAME14,797
-SRCS			 = $(addprefix ${SRCS_DIR}, $(addsuffix .c, ${SRCS_NAME}))SRCS18,954
-INCS			 = $(addprefix ${SRCS_DIR}, $(addsuffix .h, ${INCS_NAME}))INCS20,1101
-OBJS			 = $(patsubst ${SRCS_DIR}%.c,${OBJS_DIR}%.o,${SRCS})OBJS23,1286
-NAME			 = philo_oneNAME25,1427
-CC				 = ccCC30,1771
-CDEFS			 = -D_POSIX_C_SOURCE=200112LCDEFS37,1966
-LDFLAGS			 = -lpthreadLDFLAGS39,2084
-RM				= rm -rfRM42,2269
-MKDIR			= mkdir -pMKDIR43,2284
-asan: LFTRULE = asanLFTRULE60,3146
-msan: LFTRULE = msanLFTRULE68,3428
+SRCS_NAME		 = philo_twoSRCS_NAME14,797
+SRCS			 = $(addprefix ${SRCS_DIR}, $(addsuffix .c, ${SRCS_NAME}))SRCS18,946
+INCS			 = $(addprefix ${SRCS_DIR}, $(addsuffix .h, ${INCS_NAME}))INCS20,1093
+OBJS			 = $(patsubst ${SRCS_DIR}%.c,${OBJS_DIR}%.o,${SRCS})OBJS23,1278
+NAME			 = philo_twoNAME25,1419
+CC				 = ccCC30,1763
+CDEFS			 = -D_POSIX_C_SOURCE=200112LCDEFS37,1958
+LDFLAGS			 = -lpthreadLDFLAGS39,2076
+RM				= rm -rfRM42,2261
+MKDIR			= mkdir -pMKDIR43,2276
+asan: LFTRULE = asanLFTRULE60,3138
+msan: LFTRULE = msanLFTRULE68,3420

@@ -10,6 +10,15 @@
 #include "philo_one.h"
 
 short
+	ph_speak(long ts, int nb, char *message, t_shared *sh)
+{
+	pthread_mutex_lock(&sh->speaks);
+	printf("[%ld]%d %s\n", ts, nb, message);
+	pthread_mutex_unlock(&sh->speaks);
+	return (1);
+}
+
+short
 	ph_eat(t_philo *ph)
 {
 	struct timeval ctv;
@@ -29,8 +38,8 @@ short
 	pthread_mutex_lock(ph->lfork);
 	pthread_mutex_lock(ph->rfork);
 	gettimeofday(&ctv, NULL);
-	printf("\n[%ld]%d is eating", ph_timest(1, (ctv.tv_sec * 1000) +
-				(ctv.tv_usec / 1000)), ph->num);
+	ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
+				(ctv.tv_usec / 1000)), ph->num, PHILO_EAT, ph->shared);
 	usleep(*ph->shared->time_to_eat * 1000);
 	ph->lastate = ph_timest(1, (ctv.tv_sec * 1000) +
 			(ctv.tv_usec / 1000));
@@ -45,8 +54,8 @@ short
 	struct timeval ctv;
 
 	gettimeofday(&ctv, NULL);
-	printf("\n[%ld]%d is sleeping", ph_timest(1, (ctv.tv_sec * 1000) +
-				(ctv.tv_usec / 1000)), ph->num);
+	ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
+				(ctv.tv_usec / 1000)), ph->num, PHILO_SLEEP, ph->shared);
 	usleep(*ph->shared->time_to_sleep * 1000);
 	return (0);
 }
@@ -57,7 +66,7 @@ short
 	struct timeval ctv;
 
 	gettimeofday(&ctv, NULL);
-	printf("\n[%ld]%d is thinking", ph_timest(1, (ctv.tv_sec * 1000) +
-				(ctv.tv_usec / 1000)), ph->num);
+	ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
+				(ctv.tv_usec / 1000)), ph->num, PHILO_THINK, ph->shared);
 	return (0);
 }

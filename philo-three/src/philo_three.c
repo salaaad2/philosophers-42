@@ -1,11 +1,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <pthread.h>
+#include <semaphore.h>
 #include <sys/time.h>
 
 #include "utils.h"
 #include "actions.h"
-#include "philo_one.h"
+#include "philo_three.h"
 
 static void*
 	ph_check(void *ptr)
@@ -19,8 +20,8 @@ static void*
 		if (ph->isdead)
 		{
 			gettimeofday(&ctv, NULL);
-			ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
-				(ctv.tv_usec / 1000)), ph->num, PHILO_DEATH, ph->shared);
+			printf("\n[%ld]%d died", ph_timest(1, (ctv.tv_sec * 1000) +
+						(ctv.tv_usec / 1000)), ph->num);
 			ph->shared->isdead = 1;
 			return (NULL);
 		}
@@ -46,14 +47,14 @@ static void*
 void
 	ph_start(t_shared *sh)
 {
-	pthread_mutex_t	forks[*sh->max_ph];
+	sem_t	forks;
 	pthread_t		pt;
 	t_philo			**pht;
 	int				i;
 
 	if (!(pht = (t_philo **)malloc((sizeof(t_philo*) * *sh->max_ph))))
 		return ;
-	sh->forks = (pthread_mutex_t**)&forks;
+	sh->forks = (sem_t*)&forks;
 	i = -1;
 	while (++i < *sh->max_ph)
 	{
@@ -64,10 +65,7 @@ void
 		if (*sh->appetite != -1)
 			pht[i]->ate = 0;
 		pht[i]->shared = sh;
-		pthread_mutex_init(&forks[i], NULL);
-		pht[i]->lfork = &forks[i];
-		pht[i]->rfork = (i == (*sh->max_ph - 1)) ? &forks[0] :
-			&forks[i + 1];
+		ph_sem_init(sh, *sh->max_ph);
 	}
 	i = -1;
 	while (++i < *sh->max_ph && sh->isdead == 0)
