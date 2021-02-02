@@ -38,8 +38,8 @@ short
 	sem_wait(ph->shared->forks);
 	sem_wait(ph->shared->forks);
 	gettimeofday(&ctv, NULL);
-	printf("\n[%ld]%d is eating", ph_timest(1, (ctv.tv_sec * 1000) +
-				(ctv.tv_usec / 1000)), ph->num);
+	ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
+				(ctv.tv_usec / 1000)), ph->num, PHILO_EAT, ph->shared);
 	usleep(*ph->shared->time_to_eat * 1000);
 	ph->lastate = ph_timest(1, (ctv.tv_sec * 1000) +
 			(ctv.tv_usec / 1000));
@@ -54,8 +54,8 @@ short
 	struct timeval ctv;
 
 	gettimeofday(&ctv, NULL);
-	printf("\n[%ld]%d is sleeping", ph_timest(1, (ctv.tv_sec * 1000) +
-				(ctv.tv_usec / 1000)), ph->num);
+	ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
+		(ctv.tv_usec / 1000)), ph->num, PHILO_SLEEP, ph->shared);
 	usleep(*ph->shared->time_to_sleep * 1000);
 	return (0);
 }
@@ -66,7 +66,7 @@ short
 	struct timeval ctv;
 
 	gettimeofday(&ctv, NULL);
-	printf("\n[%ld]%d is thinking", ph_timest(1, (ctv.tv_sec * 1000) +
-				(ctv.tv_usec / 1000)), ph->num);
+	ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
+				(ctv.tv_usec / 1000)), ph->num, PHILO_THINK, ph->shared);
 	return (0);
 }
