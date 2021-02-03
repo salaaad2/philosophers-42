@@ -19,7 +19,7 @@ typedef struct		s_shared
 	unsigned int	*time_to_eat;
 	unsigned int	*time_to_sleep;
 	int				*max_ph;
-	int				*appetite;
+	int				*apetite;
 	int				*time;
 	bool			isdead;
 	bool			allfull;
@@ -34,8 +34,8 @@ typedef struct		s_philo
 	bool			isfull;
 	long			lastate;
 	long			time;
+	int				apetite;
 	int				num;
-	int				ate;
 }					t_philo;
 
 #endif

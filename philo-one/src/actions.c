@@ -31,18 +31,27 @@ short
 		ph->isdead = 1;
 		return (1);
 	}
-	if (*ph->shared->appetite != -1 && ph->shared->isdead == 0)
-		ph->ate++;
-	if (ph->ate == *ph->shared->appetite)
-		ph->isfull = 1;
+	if (*ph->shared->apetite == 0)
+	{
+		ph->isdead = 1;
+		printf("\nThey are full, stopping now\n");
+		return (1);
+	}
+	if (*ph->shared->apetite != -1 &&
+		ph->apetite > 0 &&
+		ph->shared->isdead == 0)
+	{
+		ph->apetite--;
+		*ph->shared->apetite -= 1;
+	}
 	pthread_mutex_lock(ph->lfork);
 	pthread_mutex_lock(ph->rfork);
 	gettimeofday(&ctv, NULL);
 	ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
-				(ctv.tv_usec / 1000)), ph->num, PHILO_EAT, ph->shared);
+					   (ctv.tv_usec / 1000)), ph->num, PHILO_EAT, ph->shared);
 	usleep(*ph->shared->time_to_eat * 1000);
 	ph->lastate = ph_timest(1, (ctv.tv_sec * 1000) +
-			(ctv.tv_usec / 1000));
+							(ctv.tv_usec / 1000));
 	pthread_mutex_unlock(ph->lfork);
 	pthread_mutex_unlock(ph->rfork);
 	return (0);

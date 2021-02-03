@@ -61,14 +61,17 @@ void
 		pht[i]->num = i + 1;
 		pht[i]->isdead = 0;
 		pht[i]->lastate = 0;
-		if (*sh->appetite != -1)
-			pht[i]->ate = 0;
+		if (*sh->apetite != -1)
+			pht[i]->apetite = *sh->apetite;
 		pht[i]->shared = sh;
 		pthread_mutex_init(&forks[i], NULL);
 		pht[i]->lfork = &forks[i];
 		pht[i]->rfork = (i == (*sh->max_ph - 1)) ? &forks[0] :
 			&forks[i + 1];
 	}
+	if (*sh->apetite != -1)
+		*sh->apetite *= *sh->max_ph;
+	printf("\napetite :[%d]\n", *sh->apetite);
 	i = -1;
 	while (++i < *sh->max_ph && sh->isdead == 0)
 	{
