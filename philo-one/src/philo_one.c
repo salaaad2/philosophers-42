@@ -16,11 +16,19 @@ static void*
 	ph = (t_philo*)ptr;
 	while (ph->shared->isdead == 0)
 	{
-		if (ph->isdead)
+		if (ph->isdead || *ph->shared->apetite == 0)
 		{
 			gettimeofday(&ctv, NULL);
-			ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
-				(ctv.tv_usec / 1000)), ph->num, PHILO_DEATH, ph->shared);
+			if (*ph->shared->apetite == 0)
+			{
+				ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
+				   (ctv.tv_usec / 1000)), ph->num, PHILO_FULL, ph->shared);
+			}
+			else
+			{
+				ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
+				   (ctv.tv_usec / 1000)), ph->num, PHILO_DEATH, ph->shared);
+			}
 			ph->shared->isdead = 1;
 			return (NULL);
 		}

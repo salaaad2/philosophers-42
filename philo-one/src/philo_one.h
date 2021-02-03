@@ -2,6 +2,7 @@
 # define PHILO_ONE_H
 
 # define PHILO_EAT "is eating"
+# define PHILO_FULL "All philosophers are full"
 # define PHILO_FORKT "has taken a fork"
 # define PHILO_FORKP "has put down a fork"
 # define PHILO_SLEEP "is sleeping"

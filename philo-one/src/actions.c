@@ -33,11 +33,11 @@ short
 	}
 	if (*ph->shared->apetite == 0)
 	{
-		ph->isdead = 1;
-		printf("\nThey are full, stopping now\n");
+		ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
+			(ctv.tv_usec / 1000)), ph->num, PHILO_DEATH, ph->shared);
 		return (1);
 	}
-	if (*ph->shared->apetite != -1 &&
+	else if (*ph->shared->apetite != -1 &&
 		ph->apetite > 0 &&
 		ph->shared->isdead == 0)
 	{
@@ -48,10 +48,10 @@ short
 	pthread_mutex_lock(ph->rfork);
 	gettimeofday(&ctv, NULL);
 	ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
-					   (ctv.tv_usec / 1000)), ph->num, PHILO_EAT, ph->shared);
+	   (ctv.tv_usec / 1000)), ph->num, PHILO_EAT, ph->shared);
 	usleep(*ph->shared->time_to_eat * 1000);
 	ph->lastate = ph_timest(1, (ctv.tv_sec * 1000) +
-							(ctv.tv_usec / 1000));
+		(ctv.tv_usec / 1000));
 	pthread_mutex_unlock(ph->lfork);
 	pthread_mutex_unlock(ph->rfork);
 	return (0);
