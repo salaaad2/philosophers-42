@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <unistd.h>
 #include <stdio.h>
 #include <pthread.h>
 #include <semaphore.h>
@@ -51,6 +52,7 @@ void
 	pthread_t		pt;
 	t_philo			**pht;
 	int				i;
+	pid_t pid;
 
 	if (!(pht = (t_philo **)malloc((sizeof(t_philo*) * *sh->max_ph))))
 		return ;
@@ -68,13 +70,16 @@ void
 	}
 	ph_sem_init(sh, *sh->max_ph);
 	i = -1;
-	while (++i < *sh->max_ph && sh->isdead == 0)
+	if ((pid = fork()) == 0)
 	{
-		pthread_create(&pt, NULL, ph_act, pht[i]);
-		pthread_create(&pt, NULL, ph_check, pht[i]);
+		while (++i < *sh->max_ph && sh->isdead == 0)
+		{
+			pthread_create(&pt, NULL, ph_act, pht[i]);
+			pthread_create(&pt, NULL, ph_check, pht[i]);
+		}
+		pthread_join(pt, NULL);
+		ph_free(sh, pht);
 	}
-	pthread_join(pt, NULL);
-	ph_free(sh, pht);
 }
 
 static short

@@ -144,6 +144,8 @@ tags
 # End of https://www.gitignore.io/api/c,linux,emacs,vim
 
 philo_one
+philo_two
+philo_three
 *.core
 vgcore*
 qwe
@@ -151,8 +153,11 @@ qwe
 noread
 .clang_complete
 compile_flags.txt
+*.txt
+*qwe*
 /bash
 /mini
 .ccls*
+.ccls-cache
 tags
 *.supp

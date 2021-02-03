@@ -33,7 +33,7 @@ short
 	free(sh->time_to_sleep);
 	free(sh->time);
 	free(sh->appetite);
-	printf("FREED ALL PHILOSOPHERS");
+	printf("\nFREED ALL PHILOSOPHERS\n");
 	exit(1);
 	return (1);
 }
