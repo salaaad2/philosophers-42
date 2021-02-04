@@ -31,7 +31,7 @@ short
 		ph->isdead = 1;
 		return (1);
 	}
-	if (*ph->shared->apetite == 0 ||
+	else if (*ph->shared->apetite == 0 ||
 		ph->apetite == 0)
 	{
 		return (1);
@@ -41,16 +41,16 @@ short
 		ph->shared->isdead == 0)
 	{
 		*ph->shared->apetite -= 1;
-	pthread_mutex_lock(ph->lfork);
-	pthread_mutex_lock(ph->rfork);
-	gettimeofday(&ctv, NULL);
-	ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
-	   (ctv.tv_usec / 1000)), ph->num, PHILO_EAT, ph->shared);
-	usleep(*ph->shared->time_to_eat * 1000);
-	ph->lastate = ph_timest(1, (ctv.tv_sec * 1000) +
-		(ctv.tv_usec / 1000));
-	pthread_mutex_unlock(ph->lfork);
-	pthread_mutex_unlock(ph->rfork);
+		pthread_mutex_lock(ph->lfork);
+		pthread_mutex_lock(ph->rfork);
+		gettimeofday(&ctv, NULL);
+		ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
+			(ctv.tv_usec / 1000)), ph->num, PHILO_EAT, ph->shared);
+		usleep(*ph->shared->time_to_eat * 1000);
+		ph->lastate = ph_timest(1, (ctv.tv_sec * 1000) +
+			(ctv.tv_usec / 1000));
+		pthread_mutex_unlock(ph->lfork);
+		pthread_mutex_unlock(ph->rfork);
 	}
 	return (0);
 }
@@ -62,7 +62,7 @@ short
 
 	gettimeofday(&ctv, NULL);
 	ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
-				(ctv.tv_usec / 1000)), ph->num, PHILO_SLEEP, ph->shared);
+		(ctv.tv_usec / 1000)), ph->num, PHILO_SLEEP, ph->shared);
 	usleep(*ph->shared->time_to_sleep * 1000);
 	return (0);
 }
