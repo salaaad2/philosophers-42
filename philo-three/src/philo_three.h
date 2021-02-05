@@ -13,7 +13,6 @@
 # include <pthread.h>
 # include <stdbool.h>
 # include <semaphore.h>
-# include <unistd.h>
 
 typedef struct		s_shared
 {
@@ -32,7 +31,7 @@ typedef struct		s_shared
 typedef struct		s_philo
 {
 	t_shared		*shared;
-	t_pid			pid;
+	pid_t			pid;
 	bool			isdead;
 	bool			isfull;
 	long			lastate;

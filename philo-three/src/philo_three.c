@@ -1,6 +1,10 @@
 #include <stdlib.h>
+#include <unistd.h>
 #include <stdio.h>
+#include <pthread.h>
+#include <semaphore.h>
 #include <sys/time.h>
+#include <sys/wait.h>
 
 #include "utils.h"
 #include "actions.h"
@@ -49,7 +53,6 @@ void
 	pthread_t		pt;
 	t_philo			**pht;
 	int				i;
-	pid_t pid;
 
 	if (!(pht = (t_philo **)malloc((sizeof(t_philo*) * *sh->max_ph))))
 		return ;
@@ -69,7 +72,7 @@ void
 	i = -1;
 	while (++i < *sh->max_ph && sh->isdead == 0)
 	{
-		if (pht[i]->pid = fork() < 0)
+		if ((pht[i]->pid = fork()) < 0)
 			ph_free(sh, pht);
 		else if (pht[i]->pid == 0)
 		{
@@ -77,6 +80,7 @@ void
 			pthread_create(&pt, NULL, ph_check, pht[i]);
 		}
 	}
+	waitpid(pht[i]->pid, 0, 0);
 	pthread_join(pt, NULL);
 	ph_free(sh, pht);
 }
