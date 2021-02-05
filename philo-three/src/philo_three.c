@@ -1,8 +1,5 @@
 #include <stdlib.h>
-#include <unistd.h>
 #include <stdio.h>
-#include <pthread.h>
-#include <semaphore.h>
 #include <sys/time.h>
 
 #include "utils.h"
@@ -70,16 +67,18 @@ void
 	}
 	ph_sem_init(sh, *sh->max_ph);
 	i = -1;
-	if ((pid = fork()) == 0)
+	while (++i < *sh->max_ph && sh->isdead == 0)
 	{
-		while (++i < *sh->max_ph && sh->isdead == 0)
+		if (pht[i]->pid = fork() < 0)
+			ph_free(sh, pht);
+		else if (pht[i]->pid == 0)
 		{
 			pthread_create(&pt, NULL, ph_act, pht[i]);
 			pthread_create(&pt, NULL, ph_check, pht[i]);
 		}
-		pthread_join(pt, NULL);
-		ph_free(sh, pht);
 	}
+	pthread_join(pt, NULL);
+	ph_free(sh, pht);
 }
 
 static short
