@@ -31,6 +31,7 @@ typedef struct		s_shared
 typedef struct		s_philo
 {
 	t_shared		*shared;
+	pid_t			pid;
 	bool			isdead;
 	bool			isfull;
 	long			lastate;

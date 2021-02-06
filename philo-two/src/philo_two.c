@@ -1,8 +1,10 @@
 #include <stdlib.h>
+#include <unistd.h>
 #include <stdio.h>
 #include <pthread.h>
 #include <semaphore.h>
 #include <sys/time.h>
+#include <sys/wait.h>
 
 #include "utils.h"
 #include "actions.h"
@@ -70,6 +72,7 @@ void
 	i = -1;
 	while (++i < *sh->max_ph && sh->isdead == 0)
 	{
+		printf("qweqweqwe\n");
 		pthread_create(&pt, NULL, ph_act, pht[i]);
 		pthread_create(&pt, NULL, ph_check, pht[i]);
 	}

@@ -25,24 +25,20 @@ short
 
 	gettimeofday(&ctv, NULL);
 	if ((ph_timest(1, (ctv.tv_sec * 1000) +
-					(ctv.tv_usec / 1000)) -
-				ph->lastate) > *ph->shared->time_to_die)
+		(ctv.tv_usec / 1000)) -
+		ph->lastate) > *ph->shared->time_to_die)
 	{
 		ph->isdead = 1;
 		return (1);
 	}
-	if (*ph->shared->appetite != -1 && ph->shared->isdead == 0)
-		ph->ate++;
-	if (ph->ate == *ph->shared->appetite)
-		ph->isfull = 1;
 	sem_wait(ph->shared->forks);
 	sem_wait(ph->shared->forks);
 	gettimeofday(&ctv, NULL);
 	ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
-				(ctv.tv_usec / 1000)), ph->num, PHILO_EAT, ph->shared);
+		(ctv.tv_usec / 1000)), ph->num, PHILO_EAT, ph->shared);
 	usleep(*ph->shared->time_to_eat * 1000);
 	ph->lastate = ph_timest(1, (ctv.tv_sec * 1000) +
-			(ctv.tv_usec / 1000));
+		(ctv.tv_usec / 1000));
 	sem_post(ph->shared->forks);
 	sem_post(ph->shared->forks);
 	return (0);
@@ -67,6 +63,6 @@ short
 
 	gettimeofday(&ctv, NULL);
 	ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
-				(ctv.tv_usec / 1000)), ph->num, PHILO_THINK, ph->shared);
+		(ctv.tv_usec / 1000)), ph->num, PHILO_THINK, ph->shared);
 	return (0);
 }
