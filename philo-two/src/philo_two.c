@@ -19,7 +19,7 @@ static void*
 	gettimeofday(&ctv, NULL);
 	while ((ph->shared->isdead == 0) && (ph->shared->apetite != 0))
 	{
-		if (ph->isdead)
+		if (ph->isdead && ph->shared->isdead != 1)
 		{
 			ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
 				(ctv.tv_usec / 1000)), ph->num, PHILO_DEATH, ph->shared);
@@ -43,7 +43,11 @@ static void*
 			(ctv.tv_usec / 1000)) - ph->lastate) > *ph->shared->time_to_die)
 			ph->isdead = 1;
 		sem_wait(ph->shared->forks);
+		ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
+			(ctv.tv_usec / 1000)), ph->num, PHILO_FORKT, ph->shared);
 		sem_wait(ph->shared->forks);
+		ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
+			(ctv.tv_usec / 1000)), ph->num, PHILO_FORKT, ph->shared);
 		gettimeofday(&ctv, NULL);
 		ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
 			(ctv.tv_usec / 1000)), ph->num, PHILO_EAT, ph->shared);
@@ -51,7 +55,11 @@ static void*
 		ph->lastate = ph_timest(1, (ctv.tv_sec * 1000) +
 			(ctv.tv_usec / 1000));
 		sem_post(ph->shared->forks);
+		ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
+			(ctv.tv_usec / 1000)), ph->num, PHILO_FORKP, ph->shared);
 		sem_post(ph->shared->forks);
+		ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
+			(ctv.tv_usec / 1000)), ph->num, PHILO_FORKP, ph->shared);
 		gettimeofday(&ctv, NULL);
 		ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
 			(ctv.tv_usec / 1000)), ph->num, PHILO_SLEEP, ph->shared);
