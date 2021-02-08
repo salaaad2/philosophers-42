@@ -91,7 +91,6 @@ void
 	}
 	if (*sh->apetite != -1)
 		*sh->apetite *= *sh->max_ph;
-	printf("\napetite :[%d]\n", *sh->apetite);
 	i = -1;
 	while (++i < *sh->max_ph && sh->isdead == 0)
 	{

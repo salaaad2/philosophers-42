@@ -1,3 +1,4 @@
+#include "philo_two.h"
 #include "utils.h"
 
 #include <unistd.h>
@@ -10,9 +11,10 @@ int
 ph_sem_init(t_shared *sh, int number)
 {
 	if ((sh->forks = sem_open(PHILO_SEMF, O_CREAT, 0777, number)) == SEM_FAILED
-		|| sem_unlink(PHILO_SEMF)
-		|| (sh->speaks = sem_open(PHILO_SEMS, O_CREAT, 0777, 1)) == SEM_FAILED
 		|| sem_unlink(PHILO_SEMF))
+		return (0);
+	if ((sh->speaks = sem_open(PHILO_SEMS, O_CREAT, 0777, 1)) == SEM_FAILED
+	|| sem_unlink(PHILO_SEMS))
 		return (0);
 	return (1);
 }
@@ -32,8 +34,8 @@ short
 	free(sh->time_to_eat);
 	free(sh->time_to_sleep);
 	free(sh->time);
-	free(sh->appetite);
-	printf("\nFREED ALL PHILOSOPHERS\n");
+	free(sh->apetite);
+	printf("FREED ALL PHILOSOPHERS");
 	exit(1);
 	return (1);
 }
@@ -103,7 +105,7 @@ short
 		return (-1);
 	if (!(sh->time = (int*)malloc(sizeof(int))))
 		return (-1);
-	if (!(sh->appetite = (int*)malloc(sizeof(int))))
+	if (!(sh->apetite = (int*)malloc(sizeof(int))))
 		return (-1);
 	*sh->max_ph = ph_atoi(av[1]);
 	*sh->time_to_die = ph_atoi(av[2]);
@@ -112,8 +114,8 @@ short
 	*sh->time = ph_timest(0, 0);
 	sh->isdead = 0;
 	if (ac == 6)
-		*sh->appetite = ph_atoi(av[5]);
+		*sh->apetite = ph_atoi(av[5]);
 	else
-		*sh->appetite = -1;
+		*sh->apetite = -1;
 	return (0);
 }

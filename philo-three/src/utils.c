@@ -10,9 +10,10 @@ int
 ph_sem_init(t_shared *sh, int number)
 {
 	if ((sh->forks = sem_open(PHILO_SEMF, O_CREAT, 0777, number)) == SEM_FAILED
-		|| sem_unlink(PHILO_SEMF)
-		|| (sh->speaks = sem_open(PHILO_SEMS, O_CREAT, 0777, 1)) == SEM_FAILED
-		|| sem_unlink(PHILO_SEMF))
+	|| sem_unlink(PHILO_SEMF))
+		return (0);
+	if ((sh->speaks = sem_open(PHILO_SEMS, O_CREAT, 0777, 1)) == SEM_FAILED
+	|| sem_unlink(PHILO_SEMS))
 		return (0);
 	return (1);
 }
