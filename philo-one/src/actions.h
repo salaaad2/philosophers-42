@@ -5,7 +5,5 @@
 
 short ph_speak(long ts, int nb, char *message, t_shared *sh);
 short ph_eat(t_philo *ph);
-short ph_sleep(t_philo *ph);
-short ph_think(t_philo *ph);
 
 #endif

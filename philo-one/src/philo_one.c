@@ -1,7 +1,9 @@
+#define _DEFAULT_SOURCE
 #include <stdlib.h>
 #include <stdio.h>
 #include <pthread.h>
 #include <sys/time.h>
+#include <unistd.h>
 
 #include "utils.h"
 #include "actions.h"
@@ -14,21 +16,13 @@ static void*
 	struct timeval	ctv;
 
 	ph = (t_philo*)ptr;
-	while (ph->shared->isdead == 0)
+	gettimeofday(&ctv, NULL);
+	while ((ph->shared->isdead == 0) && (ph->shared->apetite != 0))
 	{
-		if (ph->isdead || *ph->shared->apetite == 0)
+		if (ph->isdead)
 		{
-			gettimeofday(&ctv, NULL);
-			if (*ph->shared->apetite == 0)
-			{
-				ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
-				   (ctv.tv_usec / 1000)), ph->num, PHILO_FULL, ph->shared);
-			}
-			else
-			{
-				ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
-				   (ctv.tv_usec / 1000)), ph->num, PHILO_DEATH, ph->shared);
-			}
+			ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
+				(ctv.tv_usec / 1000)), ph->num, PHILO_DEATH, ph->shared);
 			ph->shared->isdead = 1;
 			return (NULL);
 		}
@@ -40,13 +34,31 @@ static void*
 	ph_act(void *ptr)
 {
 	t_philo *ph;
+	struct timeval ctv;
 
 	ph = (t_philo*)ptr;
 	while (1)
 	{
-		ph_eat(ph);
-		ph_sleep(ph);
-		ph_think(ph);
+		if ((ph_timest(1, (ctv.tv_sec * 1000) +
+			(ctv.tv_usec / 1000)) - ph->lastate) > *ph->shared->time_to_die)
+			ph->isdead = 1;
+		pthread_mutex_lock(ph->lfork);
+		pthread_mutex_lock(ph->rfork);
+		gettimeofday(&ctv, NULL);
+		ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
+			(ctv.tv_usec / 1000)), ph->num, PHILO_EAT, ph->shared);
+		usleep(*ph->shared->time_to_eat * 1000);
+		ph->lastate = ph_timest(1, (ctv.tv_sec * 1000) +
+			(ctv.tv_usec / 1000));
+		pthread_mutex_unlock(ph->lfork);
+		pthread_mutex_unlock(ph->rfork);
+		gettimeofday(&ctv, NULL);
+		ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
+			(ctv.tv_usec / 1000)), ph->num, PHILO_SLEEP, ph->shared);
+		usleep(*ph->shared->time_to_sleep * 1000);
+		gettimeofday(&ctv, NULL);
+		ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
+			(ctv.tv_usec / 1000)), ph->num, PHILO_THINK, ph->shared);
 	}
 	return (ptr);
 }
