@@ -43,7 +43,11 @@ static void*
 			(ctv.tv_usec / 1000)) - ph->lastate) > *ph->shared->time_to_die)
 			ph->isdead = 1;
 		pthread_mutex_lock(ph->lfork);
+		ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
+			(ctv.tv_usec / 1000)), ph->num, PHILO_FORKT, ph->shared);
 		pthread_mutex_lock(ph->rfork);
+		ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
+			(ctv.tv_usec / 1000)), ph->num, PHILO_FORKT, ph->shared);
 		gettimeofday(&ctv, NULL);
 		ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
 			(ctv.tv_usec / 1000)), ph->num, PHILO_EAT, ph->shared);
@@ -51,7 +55,11 @@ static void*
 		ph->lastate = ph_timest(1, (ctv.tv_sec * 1000) +
 			(ctv.tv_usec / 1000));
 		pthread_mutex_unlock(ph->lfork);
+		ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
+			(ctv.tv_usec / 1000)), ph->num, PHILO_FORKP, ph->shared);
 		pthread_mutex_unlock(ph->rfork);
+		ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
+			(ctv.tv_usec / 1000)), ph->num, PHILO_FORKP, ph->shared);
 		gettimeofday(&ctv, NULL);
 		ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
 			(ctv.tv_usec / 1000)), ph->num, PHILO_SLEEP, ph->shared);

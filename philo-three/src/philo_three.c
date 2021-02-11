@@ -1,3 +1,4 @@
+#define _DEFAULT_SOURCE
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -34,20 +35,38 @@ static void*
 static void*
 	ph_act(void *ptr)
 {
+	struct timeval ctv;
 	t_philo *ph;
 
 	ph = (t_philo*)ptr;
 	while (1)
 	{
-		ph_eat(ph);
-		ph_sleep(ph);
-		ph_think(ph);
+		if ((ph_timest(1, (ctv.tv_sec * 1000) +
+					   (ctv.tv_usec / 1000)) - ph->lastate) > *ph->shared->time_to_die)
+			ph->isdead = 1;
+		sem_wait(ph->shared->forks);
+		sem_wait(ph->shared->forks);
+		gettimeofday(&ctv, NULL);
+		ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
+						   (ctv.tv_usec / 1000)), ph->num, PHILO_EAT, ph->shared);
+		usleep(*ph->shared->time_to_eat * 1000);
+		ph->lastate = ph_timest(1, (ctv.tv_sec * 1000) +
+								(ctv.tv_usec / 1000));
+		sem_post(ph->shared->forks);
+		sem_post(ph->shared->forks);
+		gettimeofday(&ctv, NULL);
+		ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
+						   (ctv.tv_usec / 1000)), ph->num, PHILO_SLEEP, ph->shared);
+		usleep(*ph->shared->time_to_sleep * 1000);
+		gettimeofday(&ctv, NULL);
+		ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
+						   (ctv.tv_usec / 1000)), ph->num, PHILO_THINK, ph->shared);
 	}
 	return (ptr);
 }
 
 void
-	ph_start(t_shared *sh)
+ph_start(t_shared *sh)
 {
 	sem_t	forks;
 	pthread_t		pt;
@@ -86,7 +105,7 @@ void
 }
 
 static short
-	ph_init(int ac, char *av[], t_shared *sh)
+ph_init(int ac, char *av[], t_shared *sh)
 {
 	int i;
 
@@ -102,7 +121,7 @@ static short
 }
 
 int
-	main(int ac, char *av[])
+main(int ac, char *av[])
 {
 	t_shared sh;
 
