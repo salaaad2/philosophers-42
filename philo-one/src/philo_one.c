@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_one.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fmoenne- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/02 14:53:01 by fmoenne-          #+#    #+#             */
+/*   Updated: 2021/03/02 14:53:52 by fmoenne-         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #define _DEFAULT_SOURCE
 #include <stdlib.h>
 #include <stdio.h>
@@ -43,16 +55,19 @@ static void*
 		if ((ph_timest(1, (ctv.tv_sec * 1000) +
 			(ctv.tv_usec / 1000)) - ph->lastate) > *ph->shared->time_to_die)
 			ph->isdead = 1;
-		pthread_mutex_lock(ph->lfork);
+		if (ph->apetite > 0)
+			pthread_mutex_lock(ph->lfork);
 		ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
 			(ctv.tv_usec / 1000)), ph->num, PHILO_FORKT, ph->shared);
-		pthread_mutex_lock(ph->rfork);
+		if (ph->apetite > 0)
+			pthread_mutex_lock(ph->rfork);
 		ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
 			(ctv.tv_usec / 1000)), ph->num, PHILO_FORKT, ph->shared);
 		gettimeofday(&ctv, NULL);
 		ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
 			(ctv.tv_usec / 1000)), ph->num, PHILO_EAT, ph->shared);
 		usleep(*ph->shared->time_to_eat * 1000);
+		ph->apetite--;
 		ph->lastate = ph_timest(1, (ctv.tv_sec * 1000) +
 			(ctv.tv_usec / 1000));
 		pthread_mutex_unlock(ph->lfork);
@@ -100,6 +115,7 @@ void
 	}
 	if (*sh->apetite != -1)
 		*sh->apetite *= *sh->max_ph;
+	printf("%d\n", *sh->apetite);
 	i = -1;
 	while (++i < *sh->max_ph && sh->isdead == 0)
 	{
