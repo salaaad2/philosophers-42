@@ -37,6 +37,7 @@ static void*
 	struct timeval ctv;
 
 	ph = (t_philo*)ptr;
+		gettimeofday(&ctv, NULL);
 	while (1)
 	{
 		if ((ph_timest(1, (ctv.tv_sec * 1000) +
