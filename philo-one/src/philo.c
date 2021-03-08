@@ -43,17 +43,22 @@ static void*
 }
 
 int
-ph_eat(t_philo * ph)
+ph_lock(t_philo * ph, unsigned int ttw)
 {
 	struct timeval ct;
+	struct timeval lock_start;
 
 	gettimeofday(&ct, NULL);
-	while (1)
+	gettimeofday(&lock_start, NULL);
+	while ((((ct.tv_sec * 1000) + (ct.tv_usec / 1000)) -
+			((lock_start.tv_sec * 1000) + (lock_start.tv_usec / 1000))) < ttw)
 	{
-		if ((((ct.tv_sec * 1000) + (ct.tv_usec / 1000)) - ph->lastate) > *ph->shared->time_to_die)
+		gettimeofday(&ct, NULL);
+		if ((((ct.tv_sec * 1000) + (ct.tv_usec / 1000)) -
+			 ((lock_start.tv_sec * 1000) + (lock_start.tv_usec / 1000))) >= *ph->shared->time_to_die)
 		{
 			ph->isdead = 1;
-			break;
+			return (1);
 		}
 	}
 	return (0);
@@ -65,24 +70,29 @@ static void*
 	t_philo *ph;
 
 	ph = (t_philo*)ptr;
-	usleep(10);
 	while (1)
 	{
-		if ((ph_timest(1) - ph->lastate) > *ph->shared->time_to_die)
-			ph->isdead = 1;
 		pthread_mutex_lock(ph->lfork);
 		ph_speak(ph_timest(1), ph->num, PHILO_FORKT, ph->shared);
 		pthread_mutex_lock(ph->rfork);
 		ph_speak(ph_timest(1), ph->num, PHILO_FORKT, ph->shared);
 		ph_speak(ph_timest(1), ph->num, PHILO_EAT, ph->shared);
 		ph->lastate = ph_timest(1);
-		ph_eat(ph);
+		if (ph_lock(ph, *ph->shared->time_to_eat) == 1)
+		{
+			ph_speak(ph_timest(1), ph->num, PHILO_DEATH, ph->shared);
+			break;
+		}
 		pthread_mutex_unlock(ph->lfork);
 		ph_speak(ph_timest(1), ph->num, PHILO_FORKP, ph->shared);
 		pthread_mutex_unlock(ph->rfork);
 		ph_speak(ph_timest(1), ph->num, PHILO_FORKP, ph->shared);
 		ph_speak(ph_timest(1), ph->num, PHILO_SLEEP, ph->shared);
-		usleep(*ph->shared->time_to_sleep * 1000);
+		if (ph_lock(ph, *ph->shared->time_to_sleep) == 1)
+		{
+			ph_speak(ph_timest(1), ph->num, PHILO_DEATH, ph->shared);
+		}
+		usleep(*ph->shared->time_to_sleep * 1000); /* --> relire eat */
 		ph_speak(ph_timest(1), ph->num, PHILO_THINK, ph->shared);
 	}
 	return (ptr);
