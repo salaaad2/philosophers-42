@@ -28,12 +28,12 @@ static void*
 	struct timeval	ctv;
 
 	ph = (t_philo*)ptr;
-	while ((ph->shared->isdead == 0) &&
-		   (ph->shared->apetite != 0))
+	while (ph->shared->isdead == 0)
 	{
-		if (ph->isdead)
+		if (ph->isdead && ph->shared->isdead == 0)
 		{
 			gettimeofday(&ctv, NULL);
+			pthread_mutex_lock(&ph->shared->speaks);
 			ph_speak(ph_timest(1), ph->num, PHILO_DEATH, ph->shared);
 			ph->shared->isdead = 1;
 			return (NULL);
@@ -52,19 +52,12 @@ static void*
 	{
 		if ((ph_timest(1) - ph->lastate) > *ph->shared->time_to_die)
 			ph->isdead = 1;
-		if (ph->apetite > 0 || ph->apetite == -1)
-			pthread_mutex_lock(ph->lfork);
+		pthread_mutex_lock(ph->lfork);
 		ph_speak(ph_timest(1), ph->num, PHILO_FORKT, ph->shared);
-		if (ph->apetite > 0 || ph->apetite == -1)
-			pthread_mutex_lock(ph->rfork);
+		pthread_mutex_lock(ph->rfork);
 		ph_speak(ph_timest(1), ph->num, PHILO_FORKT, ph->shared);
 		ph_speak(ph_timest(1), ph->num, PHILO_EAT, ph->shared);
 		usleep(*ph->shared->time_to_eat * 1000);
-		if (ph->apetite > 0)
-		{
-			ph->apetite--;
-			ph->shared->apetite--;
-		}
 		ph->lastate = ph_timest(1);
 		pthread_mutex_unlock(ph->lfork);
 		ph_speak(ph_timest(1), ph->num, PHILO_FORKP, ph->shared);
