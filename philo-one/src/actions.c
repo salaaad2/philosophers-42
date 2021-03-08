@@ -17,7 +17,7 @@
 
 #include "utils.h"
 #include "actions.h"
-#include "philo_one.h"
+#include "philo.h"
 
 short
 	ph_speak(long ts, int nb, char *message, t_shared *sh)

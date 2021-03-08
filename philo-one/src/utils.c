@@ -32,7 +32,7 @@ short
 	free(sh->time_to_eat);
 	free(sh->time_to_sleep);
 	free(sh->time);
-	free(sh->apetite);
+	//free(sh->apetite);
 	printf("FREED ALL PHILOSOPHERS");
 	exit(1);
 	return (1);
@@ -76,10 +76,11 @@ short
 }
 
 long
-	ph_timest(short status, long ct)
+	ph_timest(short status)
 {
 	struct timeval	tv;
 	static long		ftime;
+	long ct;
 
 	gettimeofday(&tv, NULL);
 	if (status == 0)
@@ -87,6 +88,7 @@ long
 		ftime = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 		printf("time was set : [%ld]", ftime);
 	}
+	ct = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 	return ((status == 0) ? ftime : ct - ftime);
 }
 
@@ -109,7 +111,7 @@ short
 	*sh->time_to_die = ph_atoi(av[2]);
 	*sh->time_to_eat = ph_atoi(av[3]);
 	*sh->time_to_sleep = ph_atoi(av[4]);
-	*sh->time = ph_timest(0, 0);
+	*sh->time = ph_timest(0);
 	sh->isdead = 0;
 	if (ac == 6)
 		*sh->apetite = ph_atoi(av[5]);

@@ -19,7 +19,7 @@
 
 #include "utils.h"
 #include "actions.h"
-#include "philo_one.h"
+#include "philo.h"
 
 static void*
 	ph_check(void *ptr)
@@ -28,13 +28,13 @@ static void*
 	struct timeval	ctv;
 
 	ph = (t_philo*)ptr;
-	gettimeofday(&ctv, NULL);
-	while ((ph->shared->isdead == 0) && (ph->shared->apetite != 0))
+	while ((ph->shared->isdead == 0) &&
+		   (ph->shared->apetite != 0))
 	{
 		if (ph->isdead)
 		{
-			ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
-				(ctv.tv_usec / 1000)), ph->num, PHILO_DEATH, ph->shared);
+			gettimeofday(&ctv, NULL);
+			ph_speak(ph_timest(1), ph->num, PHILO_DEATH, ph->shared);
 			ph->shared->isdead = 1;
 			return (NULL);
 		}
@@ -46,43 +46,33 @@ static void*
 	ph_act(void *ptr)
 {
 	t_philo *ph;
-	struct timeval ctv;
 
 	ph = (t_philo*)ptr;
-		gettimeofday(&ctv, NULL);
 	while (1)
 	{
-		if ((ph_timest(1, (ctv.tv_sec * 1000) +
-			(ctv.tv_usec / 1000)) - ph->lastate) > *ph->shared->time_to_die)
+		if ((ph_timest(1) - ph->lastate) > *ph->shared->time_to_die)
 			ph->isdead = 1;
-		if (ph->apetite > 0)
+		if (ph->apetite > 0 || ph->apetite == -1)
 			pthread_mutex_lock(ph->lfork);
-		ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
-			(ctv.tv_usec / 1000)), ph->num, PHILO_FORKT, ph->shared);
-		if (ph->apetite > 0)
+		ph_speak(ph_timest(1), ph->num, PHILO_FORKT, ph->shared);
+		if (ph->apetite > 0 || ph->apetite == -1)
 			pthread_mutex_lock(ph->rfork);
-		ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
-			(ctv.tv_usec / 1000)), ph->num, PHILO_FORKT, ph->shared);
-		gettimeofday(&ctv, NULL);
-		ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
-			(ctv.tv_usec / 1000)), ph->num, PHILO_EAT, ph->shared);
+		ph_speak(ph_timest(1), ph->num, PHILO_FORKT, ph->shared);
+		ph_speak(ph_timest(1), ph->num, PHILO_EAT, ph->shared);
 		usleep(*ph->shared->time_to_eat * 1000);
-		ph->apetite--;
-		ph->lastate = ph_timest(1, (ctv.tv_sec * 1000) +
-			(ctv.tv_usec / 1000));
+		if (ph->apetite > 0)
+		{
+			ph->apetite--;
+			ph->shared->apetite--;
+		}
+		ph->lastate = ph_timest(1);
 		pthread_mutex_unlock(ph->lfork);
-		ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
-			(ctv.tv_usec / 1000)), ph->num, PHILO_FORKP, ph->shared);
+		ph_speak(ph_timest(1), ph->num, PHILO_FORKP, ph->shared);
 		pthread_mutex_unlock(ph->rfork);
-		ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
-			(ctv.tv_usec / 1000)), ph->num, PHILO_FORKP, ph->shared);
-		gettimeofday(&ctv, NULL);
-		ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
-			(ctv.tv_usec / 1000)), ph->num, PHILO_SLEEP, ph->shared);
+		ph_speak(ph_timest(1), ph->num, PHILO_FORKP, ph->shared);
+		ph_speak(ph_timest(1), ph->num, PHILO_SLEEP, ph->shared);
 		usleep(*ph->shared->time_to_sleep * 1000);
-		gettimeofday(&ctv, NULL);
-		ph_speak(ph_timest(1, (ctv.tv_sec * 1000) +
-			(ctv.tv_usec / 1000)), ph->num, PHILO_THINK, ph->shared);
+		ph_speak(ph_timest(1), ph->num, PHILO_THINK, ph->shared);
 	}
 	return (ptr);
 }
@@ -107,6 +97,8 @@ void
 		pht[i]->lastate = 0;
 		if (*sh->apetite != -1)
 			pht[i]->apetite = *sh->apetite;
+		else
+			pht[i]->apetite = -1;
 		pht[i]->shared = sh;
 		pthread_mutex_init(&forks[i], NULL);
 		pht[i]->lfork = &forks[i];
