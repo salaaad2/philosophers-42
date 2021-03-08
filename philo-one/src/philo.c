@@ -82,6 +82,11 @@ static void*
 			ph_speak(ph_timest(1), ph->num, PHILO_DEATH, ph->shared);
 			break;
 		}
+		else if (ph->apetite >= 0 && *ph->shared->apetite != -1)
+		{
+			ph->apetite -= 1;
+			ph->shared->apetite -= 1;
+		}
 		pthread_mutex_unlock(ph->lfork);
 		ph_speak(ph_timest(1), ph->num, PHILO_FORKP, ph->shared);
 		pthread_mutex_unlock(ph->rfork);
