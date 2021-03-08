@@ -42,12 +42,30 @@ static void*
 	return (NULL);
 }
 
+int
+ph_eat(t_philo * ph)
+{
+	struct timeval ct;
+
+	gettimeofday(&ct, NULL);
+	while (1)
+	{
+		if ((((ct.tv_sec * 1000) + (ct.tv_usec / 1000)) - ph->lastate) > *ph->shared->time_to_die)
+		{
+			ph->isdead = 1;
+			break;
+		}
+	}
+	return (0);
+}
+
 static void*
 	ph_act(void *ptr)
 {
 	t_philo *ph;
 
 	ph = (t_philo*)ptr;
+	usleep(10);
 	while (1)
 	{
 		if ((ph_timest(1) - ph->lastate) > *ph->shared->time_to_die)
@@ -57,8 +75,8 @@ static void*
 		pthread_mutex_lock(ph->rfork);
 		ph_speak(ph_timest(1), ph->num, PHILO_FORKT, ph->shared);
 		ph_speak(ph_timest(1), ph->num, PHILO_EAT, ph->shared);
-		usleep(*ph->shared->time_to_eat * 1000);
 		ph->lastate = ph_timest(1);
+		ph_eat(ph);
 		pthread_mutex_unlock(ph->lfork);
 		ph_speak(ph_timest(1), ph->num, PHILO_FORKP, ph->shared);
 		pthread_mutex_unlock(ph->rfork);

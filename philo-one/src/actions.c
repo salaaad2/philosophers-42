@@ -23,7 +23,12 @@ short
 	ph_speak(long ts, int nb, char *message, t_shared *sh)
 {
 	pthread_mutex_lock(&sh->speaks);
-	printf("[%ld]%d %s\n", ts, nb, message);
+	if (sh->isdead == 1)
+	{
+		pthread_mutex_unlock(&sh->speaks);
+		return (1);
+	}
+	printf("%ld %d %s\n", ts, nb, message);
 	pthread_mutex_unlock(&sh->speaks);
-	return (1);
+	return (0);
 }
