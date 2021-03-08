@@ -34,7 +34,6 @@ static void*
 		{
 			gettimeofday(&ctv, NULL);
 			pthread_mutex_lock(&ph->shared->speaks);
-			ph_speak(ph_timest(1), ph->num, PHILO_DEATH, ph->shared);
 			ph->shared->isdead = 1;
 			return (NULL);
 		}
@@ -91,8 +90,8 @@ static void*
 		if (ph_lock(ph, *ph->shared->time_to_sleep) == 1)
 		{
 			ph_speak(ph_timest(1), ph->num, PHILO_DEATH, ph->shared);
+			break;
 		}
-		usleep(*ph->shared->time_to_sleep * 1000); /* --> relire eat */
 		ph_speak(ph_timest(1), ph->num, PHILO_THINK, ph->shared);
 	}
 	return (ptr);
