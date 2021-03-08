@@ -13,7 +13,7 @@
 #ifndef ONE_UTILS_H
 # define ONE_UTILS_H
 
-# include "philo_three.h"
+# include "philo.h"
 
 int	ph_sem_init(t_shared *sh, int number);
 void	ft_putstr(char *str);
