@@ -37,6 +37,13 @@ static void*
 			ph->shared->isdead = 1;
 			return (NULL);
 		}
+		else if (*ph->shared->apetite == 0)
+		{
+			gettimeofday(&ctv, NULL);
+			ph_speak(ph_timest(1), ph->num, PHILO_FULL, ph->shared);
+			pthread_mutex_lock(&ph->shared->speaks);
+			return (NULL);
+		}
 	}
 	return (NULL);
 }
@@ -77,7 +84,7 @@ static void*
 		ph_speak(ph_timest(1), ph->num, PHILO_FORKT, ph->shared);
 		ph_speak(ph_timest(1), ph->num, PHILO_EAT, ph->shared);
 		ph->lastate = ph_timest(1);
-		if (ph_lock(ph, *ph->shared->time_to_eat) == 1)
+		if (ph->apetite >= 0 && ph_lock(ph, *ph->shared->time_to_eat) == 1)
 		{
 			ph_speak(ph_timest(1), ph->num, PHILO_DEATH, ph->shared);
 			break;
@@ -88,7 +95,6 @@ static void*
 			*ph->shared->apetite -= 1;
 			if (*ph->shared->apetite == 0)
 			{
-				ph_speak(ph_timest(1), ph->num, PHILO_FULL, ph->shared);
 				break;
 			}
 		}
