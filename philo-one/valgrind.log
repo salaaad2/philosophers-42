@@ -1,0 +1,546 @@
+==10116== Memcheck, a memory error detector
+==10116== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==10116== Using Valgrind-3.16.1 and LibVEX; rerun with -h for copyright info
+==10116== Command: ./philo_one 4 40 19 9
+==10116== Parent PID: 25625
+==10116== 
+==10116== Thread 4:
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F6CE: pthread_mutex_lock (pthread_mutex_lock.c:71)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x1093F6: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F0A3: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x1093F6: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F0C1: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x1093F6: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F0D8: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x1093F6: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F0E0: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x1093F6: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x4890EB1: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:41)
+==10116==    by 0x109F67: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x1093F6: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x4890AEC: __pthread_mutex_unlock_full (pthread_mutex_unlock.c:101)
+==10116==    by 0x109F67: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x1093F6: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Use of uninitialised value of size 8
+==10116==    at 0x4890AF9: __pthread_mutex_unlock_full (pthread_mutex_unlock.c:101)
+==10116==    by 0x109F67: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x1093F6: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F6CE: pthread_mutex_lock (pthread_mutex_lock.c:71)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x109433: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F0A3: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x109433: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F0C1: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x109433: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F0D8: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x109433: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F0E0: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x109433: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x4890EB1: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:41)
+==10116==    by 0x109F67: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x109433: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x4890AEC: __pthread_mutex_unlock_full (pthread_mutex_unlock.c:101)
+==10116==    by 0x109F67: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x109433: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Use of uninitialised value of size 8
+==10116==    at 0x4890AF9: __pthread_mutex_unlock_full (pthread_mutex_unlock.c:101)
+==10116==    by 0x109F67: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x109433: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F6CE: pthread_mutex_lock (pthread_mutex_lock.c:71)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x109460: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F0A3: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x109460: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F0C1: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x109460: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F0D8: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x109460: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F0E0: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x109460: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x4890EB1: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:41)
+==10116==    by 0x109F67: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x109460: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x4890AEC: __pthread_mutex_unlock_full (pthread_mutex_unlock.c:101)
+==10116==    by 0x109F67: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x109460: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Use of uninitialised value of size 8
+==10116==    at 0x4890AF9: __pthread_mutex_unlock_full (pthread_mutex_unlock.c:101)
+==10116==    by 0x109F67: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x109460: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F6CE: pthread_mutex_lock (pthread_mutex_lock.c:71)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x10954F: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F0A3: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x10954F: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F0C1: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x10954F: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F0D8: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x10954F: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F0E0: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x10954F: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x4890EB1: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:41)
+==10116==    by 0x109F67: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x10954F: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x4890AEC: __pthread_mutex_unlock_full (pthread_mutex_unlock.c:101)
+==10116==    by 0x109F67: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x10954F: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Use of uninitialised value of size 8
+==10116==    at 0x4890AF9: __pthread_mutex_unlock_full (pthread_mutex_unlock.c:101)
+==10116==    by 0x109F67: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x10954F: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F6CE: pthread_mutex_lock (pthread_mutex_lock.c:71)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x10958C: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F0A3: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x10958C: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F0C1: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x10958C: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F0D8: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x10958C: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F0E0: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x10958C: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x4890EB1: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:41)
+==10116==    by 0x109F67: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x10958C: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x4890AEC: __pthread_mutex_unlock_full (pthread_mutex_unlock.c:101)
+==10116==    by 0x109F67: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x10958C: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Use of uninitialised value of size 8
+==10116==    at 0x4890AF9: __pthread_mutex_unlock_full (pthread_mutex_unlock.c:101)
+==10116==    by 0x109F67: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x10958C: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F6CE: pthread_mutex_lock (pthread_mutex_lock.c:71)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x1095B9: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F0A3: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x1095B9: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F0C1: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x1095B9: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F0D8: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x1095B9: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F0E0: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x1095B9: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x4890EB1: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:41)
+==10116==    by 0x109F67: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x1095B9: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x4890AEC: __pthread_mutex_unlock_full (pthread_mutex_unlock.c:101)
+==10116==    by 0x109F67: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x1095B9: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Use of uninitialised value of size 8
+==10116==    at 0x4890AF9: __pthread_mutex_unlock_full (pthread_mutex_unlock.c:101)
+==10116==    by 0x109F67: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x1095B9: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F6CE: pthread_mutex_lock (pthread_mutex_lock.c:71)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x109636: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F0A3: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x109636: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F0C1: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x109636: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F0D8: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x109636: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F0E0: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x109636: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x4890EB1: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:41)
+==10116==    by 0x109F67: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x109636: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x4890AEC: __pthread_mutex_unlock_full (pthread_mutex_unlock.c:101)
+==10116==    by 0x109F67: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x109636: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Use of uninitialised value of size 8
+==10116==    at 0x4890AF9: __pthread_mutex_unlock_full (pthread_mutex_unlock.c:101)
+==10116==    by 0x109F67: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x109636: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Thread 8:
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F6CE: pthread_mutex_lock (pthread_mutex_lock.c:71)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x1094C3: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F0A3: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x1094C3: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F0C1: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x1094C3: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F0D8: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x1094C3: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F0E0: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==10116==    by 0x109F15: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x1094C3: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x4890EB1: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:41)
+==10116==    by 0x109F67: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x1094C3: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x4890AEC: __pthread_mutex_unlock_full (pthread_mutex_unlock.c:101)
+==10116==    by 0x109F67: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x1094C3: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Use of uninitialised value of size 8
+==10116==    at 0x4890AF9: __pthread_mutex_unlock_full (pthread_mutex_unlock.c:101)
+==10116==    by 0x109F67: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x1094C3: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Thread 9:
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F6CE: pthread_mutex_lock (pthread_mutex_lock.c:71)
+==10116==    by 0x10921E: ph_check (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F0A3: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==10116==    by 0x10921E: ph_check (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F0C1: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==10116==    by 0x10921E: ph_check (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F0D8: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==10116==    by 0x10921E: ph_check (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x488F0E0: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==10116==    by 0x10921E: ph_check (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Thread 2:
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x4890EB1: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:41)
+==10116==    by 0x109F31: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x10958C: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x4890AEC: __pthread_mutex_unlock_full (pthread_mutex_unlock.c:101)
+==10116==    by 0x109F31: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x10958C: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Use of uninitialised value of size 8
+==10116==    at 0x4890AF9: __pthread_mutex_unlock_full (pthread_mutex_unlock.c:101)
+==10116==    by 0x109F31: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x10958C: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x4890EB1: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:41)
+==10116==    by 0x109F31: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x1095B9: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Conditional jump or move depends on uninitialised value(s)
+==10116==    at 0x4890AEC: __pthread_mutex_unlock_full (pthread_mutex_unlock.c:101)
+==10116==    by 0x109F31: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x1095B9: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== Use of uninitialised value of size 8
+==10116==    at 0x4890AF9: __pthread_mutex_unlock_full (pthread_mutex_unlock.c:101)
+==10116==    by 0x109F31: ph_speak (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x1095B9: ph_act (in /home/salad/docs/42projects/42-philosophers/philo-one/philo_one)
+==10116==    by 0x488CFA2: start_thread (pthread_create.c:486)
+==10116==    by 0x499F4CE: clone (clone.S:95)
+==10116== 
+==10116== 
+==10116== HEAP SUMMARY:
+==10116==     in use at exit: 2,184 bytes in 18 blocks
+==10116==   total heap usage: 20 allocs, 2 frees, 3,480 bytes allocated
+==10116== 
+==10116== LEAK SUMMARY:
+==10116==    definitely lost: 0 bytes in 0 blocks
+==10116==    indirectly lost: 0 bytes in 0 blocks
+==10116==      possibly lost: 1,904 bytes in 7 blocks
+==10116==    still reachable: 280 bytes in 11 blocks
+==10116==         suppressed: 0 bytes in 0 blocks
+==10116== Rerun with --leak-check=full to see details of leaked memory
+==10116== 
+==10116== Use --track-origins=yes to see where uninitialised values come from
+==10116== For lists of detected and suppressed errors, rerun with: -s
+==10116== ERROR SUMMARY: 149 errors from 75 contexts (suppressed: 0 from 0)

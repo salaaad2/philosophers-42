@@ -19,19 +19,8 @@
 short
 	ph_free(t_shared *sh, t_philo **pht)
 {
-	int i;
-
-	i = -1;
-	while (++i < *sh->max_ph)
-	{
-		free(pht[i]);
-	}
-	free(sh->max_ph);
-	free(sh->time_to_die);
-	free(sh->time_to_eat);
-	free(sh->time_to_sleep);
-	free(sh->time);
-	//free(sh->apetite);
+	(void)sh;
+	(void)pht;
 	printf("FREED ALL PHILOSOPHERS");
 	exit(1);
 	return (1);
