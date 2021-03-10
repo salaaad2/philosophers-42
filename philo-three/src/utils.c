@@ -5,24 +5,22 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmoenne- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/02 14:54:31 by fmoenne-          #+#    #+#             */
-/*   Updated: 2021/03/02 14:54:32 by fmoenne-         ###   ########lyon.fr   */
+/*   Created: 2021/03/02 14:53:36 by fmoenne-          #+#    #+#             */
+/*   Updated: 2021/03/02 14:54:01 by fmoenne-         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
-
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <fcntl.h>
 #include <sys/time.h>
 
-int
-ph_sem_init(t_shared *sh, int number)
+short
+	ph_sem_init(t_shared *sh, int number)
 {
 	if ((sh->forks = sem_open(PHILO_SEMF, O_CREAT, 0777, number)) == SEM_FAILED
-	|| sem_unlink(PHILO_SEMF))
+		|| sem_unlink(PHILO_SEMF))
 		return (0);
 	if ((sh->speaks = sem_open(PHILO_SEMS, O_CREAT, 0777, 1)) == SEM_FAILED
 	|| sem_unlink(PHILO_SEMS))
@@ -33,21 +31,8 @@ ph_sem_init(t_shared *sh, int number)
 short
 	ph_free(t_shared *sh, t_philo **pht)
 {
-	int i;
-
-	i = -1;
-	while (++i < *sh->max_ph)
-	{
-		free(pht[i]);
-	}
-	free(sh->max_ph);
-	free(sh->time_to_die);
-	free(sh->time_to_eat);
-	free(sh->time_to_sleep);
-	free(sh->time);
-	free(sh->appetite);
-	printf("\nFREED ALL PHILOSOPHERS\n");
-	exit(1);
+	(void)sh;
+	(void)pht;
 	return (1);
 }
 
@@ -89,10 +74,11 @@ short
 }
 
 long
-	ph_timest(short status, long ct)
+	ph_timest(short status)
 {
 	struct timeval	tv;
 	static long		ftime;
+	long ct;
 
 	gettimeofday(&tv, NULL);
 	if (status == 0)
@@ -100,33 +86,22 @@ long
 		ftime = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 		printf("time was set : [%ld]", ftime);
 	}
+	ct = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 	return ((status == 0) ? ftime : ct - ftime);
 }
 
 short
 	ph_fills(int ac, char *av[], t_shared *sh)
 {
-	if (!(sh->max_ph = (int*)malloc(sizeof(int))))
-		return (-1);
-	if (!(sh->time_to_die = (unsigned int*)malloc(sizeof(unsigned int))))
-		return (-1);
-	if (!(sh->time_to_eat = (unsigned int*)malloc(sizeof(unsigned int))))
-		return (-1);
-	if (!(sh->time_to_sleep = (unsigned int*)malloc(sizeof(unsigned int))))
-		return (-1);
-	if (!(sh->time = (int*)malloc(sizeof(int))))
-		return (-1);
-	if (!(sh->appetite = (int*)malloc(sizeof(int))))
-		return (-1);
-	*sh->max_ph = ph_atoi(av[1]);
-	*sh->time_to_die = ph_atoi(av[2]);
-	*sh->time_to_eat = ph_atoi(av[3]);
-	*sh->time_to_sleep = ph_atoi(av[4]);
-	*sh->time = ph_timest(0, 0);
+	sh->max_ph = ph_atoi(av[1]);
+	sh->time_to_die = ph_atoi(av[2]);
+	sh->time_to_eat = ph_atoi(av[3]);
+	sh->time_to_sleep = ph_atoi(av[4]);
+	sh->time = ph_timest(0);
 	sh->isdead = 0;
 	if (ac == 6)
-		*sh->appetite = ph_atoi(av[5]);
+		sh->apetite = ph_atoi(av[5]);
 	else
-		*sh->appetite = -1;
+		sh->apetite = -1;
 	return (0);
 }
