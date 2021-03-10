@@ -1,4 +1,0 @@
-#+TITLE: philo TODO LIST
-
-* [DONE] thread to watch death
-* stop the loop when someone dies

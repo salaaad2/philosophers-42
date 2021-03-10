@@ -31,12 +31,12 @@ typedef struct		s_shared
 {
 	sem_t			*forks;
 	sem_t			*speaks;
-	unsigned int	*time_to_die;
-	unsigned int	*time_to_eat;
-	unsigned int	*time_to_sleep;
-	int				*max_ph;
-	int				*apetite;
-	int				*time;
+	unsigned int	time_to_die;
+	unsigned int	time_to_eat;
+	unsigned int	time_to_sleep;
+	int				max_ph;
+	int				apetite;
+	int				time;
 	bool			isdead;
 	bool			allfull;
 }					t_shared;

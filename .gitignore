@@ -138,6 +138,7 @@ Sessionx.vim
 *~
 # Auto-generated tag files
 tags
+TAGS
 # Persistent undo
 [._]*.un~
 
@@ -148,16 +149,16 @@ philo_two
 philo_three
 *.core
 vgcore*
-qwe
+*asd*
 *.sh
 noread
 .clang_complete
 compile_flags.txt
+*.log
 *.txt
 *qwe*
 /bash
 /mini
 .ccls*
 .ccls-cache
-tags
 *.supp
