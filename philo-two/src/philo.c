@@ -173,7 +173,9 @@ int
 	main(int ac, char *av[])
 {
 	t_shared sh;
+	int i;
 
+	i = 1;
 	if (ac <= 4 || ac >= 7)
 	{
 		ft_putstr("wrong number of arguments\n");
@@ -181,8 +183,13 @@ int
 	}
 	else
 	{
-		if (ph_init(ac, av, &sh) == -1)
-			return (1);
+		while (i < ac)
+		{
+			if (!ph_isfullnum(av[i]))
+				return (-1);
+			i++;
+		}
+		ph_fills(ac, av, &sh);
 		ph_start(&sh);
 	}
 	return (0);
