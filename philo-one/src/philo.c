@@ -37,7 +37,7 @@ static void*
 			ph->shared->isdead = 1;
 			return (NULL);
 		}
-		else if (*ph->shared->apetite == 0)
+		else if (ph->shared->apetite == 0)
 		{
 			gettimeofday(&ctv, NULL);
 			ph_speak(ph_timest(1), ph->num, PHILO_FULL, ph->shared);
@@ -61,7 +61,7 @@ ph_lock(t_philo * ph, unsigned int ttw)
 	{
 		gettimeofday(&ct, NULL);
 		if ((((ct.tv_sec * 1000) + (ct.tv_usec / 1000)) -
-			 ((lock_start.tv_sec * 1000) + (lock_start.tv_usec / 1000))) >= *ph->shared->time_to_die)
+			 ((lock_start.tv_sec * 1000) + (lock_start.tv_usec / 1000))) >= ph->shared->time_to_die)
 		{
 			ph->isdead = 1;
 			return (1);
@@ -84,16 +84,16 @@ static void*
 		ph_speak(ph_timest(1), ph->num, PHILO_FORKT, ph->shared);
 		ph_speak(ph_timest(1), ph->num, PHILO_EAT, ph->shared);
 		ph->lastate = ph_timest(1);
-		if (ph->apetite >= 0 && ph_lock(ph, *ph->shared->time_to_eat) == 1)
+		if (ph->apetite >= 0 && ph_lock(ph, ph->shared->time_to_eat) == 1)
 		{
 			ph_speak(ph_timest(1), ph->num, PHILO_DEATH, ph->shared);
 			break;
 		}
-		if (ph->apetite >= 0 && *ph->shared->apetite != -1)
+		if (ph->apetite >= 0 && ph->shared->apetite != -1)
 		{
 			ph->apetite -= 1;
-			*ph->shared->apetite -= 1;
-			if (*ph->shared->apetite == 0)
+			ph->shared->apetite -= 1;
+			if (ph->shared->apetite == 0)
 			{
 				break;
 			}
@@ -103,7 +103,7 @@ static void*
 		pthread_mutex_unlock(ph->rfork);
 		ph_speak(ph_timest(1), ph->num, PHILO_FORKP, ph->shared);
 		ph_speak(ph_timest(1), ph->num, PHILO_SLEEP, ph->shared);
-		if (ph_lock(ph, *ph->shared->time_to_sleep) == 1)
+		if (ph_lock(ph, ph->shared->time_to_sleep) == 1)
 		{
 			ph_speak(ph_timest(1), ph->num, PHILO_DEATH, ph->shared);
 			break;
@@ -116,36 +116,36 @@ static void*
 void
 	ph_start(t_shared *sh)
 {
-	pthread_mutex_t	forks[*sh->max_ph];
+	pthread_mutex_t	forks[sh->max_ph];
 	pthread_t		pt;
 	t_philo			**pht;
 	int				i;
 
-	if (!(pht = (t_philo **)malloc((sizeof(t_philo*) * *sh->max_ph))))
+	if (!(pht = (t_philo **)malloc((sizeof(t_philo*) * sh->max_ph))))
 		return ;
 	sh->forks = (pthread_mutex_t**)&forks;
 	i = -1;
-	while (++i < *sh->max_ph)
+	while (++i < sh->max_ph)
 	{
 		pht[i] = (t_philo *)malloc(sizeof(t_philo));
 		pht[i]->num = i + 1;
 		pht[i]->isdead = 0;
 		pht[i]->lastate = 0;
-		if (*sh->apetite != -1)
-			pht[i]->apetite = *sh->apetite;
+		if (sh->apetite != -1)
+			pht[i]->apetite = sh->apetite;
 		else
 			pht[i]->apetite = -1;
 		pht[i]->shared = sh;
 		pthread_mutex_init(&forks[i], NULL);
 		pht[i]->lfork = &forks[i];
-		pht[i]->rfork = (i == (*sh->max_ph - 1)) ? &forks[0] :
+		pht[i]->rfork = (i == (sh->max_ph - 1)) ? &forks[0] :
 			&forks[i + 1];
 	}
-	if (*sh->apetite != -1)
-		*sh->apetite *= *sh->max_ph;
-	printf("%d\n", *sh->apetite);
+	if (sh->apetite != -1)
+		sh->apetite *= sh->max_ph;
+	printf("%d\n", sh->apetite);
 	i = -1;
-	while (++i < *sh->max_ph && sh->isdead == 0)
+	while (++i < sh->max_ph && sh->isdead == 0)
 	{
 		pthread_create(&pt, NULL, ph_act, pht[i]);
 		pthread_create(&pt, NULL, ph_check, pht[i]);

@@ -28,12 +28,12 @@ typedef struct		s_shared
 {
 	pthread_mutex_t	**forks;
 	pthread_mutex_t	speaks;
-	unsigned int	*time_to_die;
-	unsigned int	*time_to_eat;
-	unsigned int	*time_to_sleep;
-	int				*max_ph;
-	int				*apetite;
-	int				*time;
+	unsigned int	time_to_die;
+	unsigned int	time_to_eat;
+	unsigned int	time_to_sleep;
+	int				max_ph;
+	int				apetite;
+	int				time;
 	bool			isdead;
 	bool			allfull;
 }					t_shared;

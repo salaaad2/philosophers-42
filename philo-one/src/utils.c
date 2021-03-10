@@ -21,7 +21,6 @@ short
 {
 	(void)sh;
 	(void)pht;
-	printf("FREED ALL PHILOSOPHERS");
 	exit(1);
 	return (1);
 }
@@ -83,27 +82,15 @@ long
 short
 	ph_fills(int ac, char *av[], t_shared *sh)
 {
-	if (!(sh->max_ph = (int*)malloc(sizeof(int))))
-		return (-1);
-	if (!(sh->time_to_die = (unsigned int*)malloc(sizeof(unsigned int))))
-		return (-1);
-	if (!(sh->time_to_eat = (unsigned int*)malloc(sizeof(unsigned int))))
-		return (-1);
-	if (!(sh->time_to_sleep = (unsigned int*)malloc(sizeof(unsigned int))))
-		return (-1);
-	if (!(sh->time = (int*)malloc(sizeof(int))))
-		return (-1);
-	if (!(sh->apetite = (int*)malloc(sizeof(int))))
-		return (-1);
-	*sh->max_ph = ph_atoi(av[1]);
-	*sh->time_to_die = ph_atoi(av[2]);
-	*sh->time_to_eat = ph_atoi(av[3]);
-	*sh->time_to_sleep = ph_atoi(av[4]);
-	*sh->time = ph_timest(0);
+	sh->max_ph = ph_atoi(av[1]);
+	sh->time_to_die = ph_atoi(av[2]);
+	sh->time_to_eat = ph_atoi(av[3]);
+	sh->time_to_sleep = ph_atoi(av[4]);
+	sh->time = ph_timest(0);
 	sh->isdead = 0;
 	if (ac == 6)
-		*sh->apetite = ph_atoi(av[5]);
+		sh->apetite = ph_atoi(av[5]);
 	else
-		*sh->apetite = -1;
+		sh->apetite = -1;
 	return (0);
 }
