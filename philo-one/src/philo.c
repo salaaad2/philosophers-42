@@ -66,12 +66,10 @@ int				ph_lock(t_philo *ph, unsigned int ttw)
 	return (0);
 }
 
-static void		*ph_act(void *ptr)
+void
+	ph_fork(int mode, t_philo *ph)
 {
-	t_philo			*ph;
-
-	ph = (t_philo*)ptr;
-	while (1)
+	if (mode == 1)
 	{
 		pthread_mutex_lock(ph->lfork);
 		ph_speak(ph_timest(1), ph->num, PHILO_FORKT, ph->shared);
@@ -79,25 +77,35 @@ static void		*ph_act(void *ptr)
 		ph_speak(ph_timest(1), ph->num, PHILO_FORKT, ph->shared);
 		ph_speak(ph_timest(1), ph->num, PHILO_EAT, ph->shared);
 		ph->lastate = ph_timest(1);
-		if (ph->apetite >= 0 && ph_lock(ph, ph->shared->time_to_eat) == 1)
-		{
-			ph_speak(ph_timest(1), ph->num, PHILO_DEATH, ph->shared);
-			break ;
-		}
-		if (ph->apetite >= 0 && ph->shared->apetite != -1)
-		{
-			ph->apetite -= 1;
-			ph->shared->apetite -= 1;
-			if (ph->shared->apetite == 0)
-			{
-				break ;
-			}
-		}
+	}
+	else
+	{
 		pthread_mutex_unlock(ph->lfork);
 		ph_speak(ph_timest(1), ph->num, PHILO_FORKP, ph->shared);
 		pthread_mutex_unlock(ph->rfork);
 		ph_speak(ph_timest(1), ph->num, PHILO_FORKP, ph->shared);
 		ph_speak(ph_timest(1), ph->num, PHILO_SLEEP, ph->shared);
+	}
+}
+
+static void		*ph_act(void *ptr)
+{
+	t_philo			*ph;
+
+	ph = (t_philo*)ptr;
+	while (1)
+	{
+		ph_fork(1, ph);
+		if (ph->apetite >= 0 && ph_lock(ph, ph->shared->time_to_eat) == 1)
+			break ;
+		if (ph->apetite >= 0 && ph->shared->apetite != -1)
+		{
+			ph->apetite -= 1;
+			ph->shared->apetite -= 1;
+			if (ph->shared->apetite == 0)
+				break ;
+		}
+		ph_fork(2, ph);
 		if (ph_lock(ph, ph->shared->time_to_sleep) == 1)
 		{
 			ph_speak(ph_timest(1), ph->num, PHILO_DEATH, ph->shared);
@@ -121,22 +129,11 @@ void			ph_start(t_shared *sh)
 	i = -1;
 	while (++i < sh->max_ph)
 	{
-		pht[i] = (t_philo *)malloc(sizeof(t_philo));
-		pht[i]->num = i + 1;
-		pht[i]->isdead = 0;
-		pht[i]->lastate = 0;
-		if (sh->apetite != -1)
-			pht[i]->apetite = sh->apetite;
-		else
-			pht[i]->apetite = -1;
-		pht[i]->shared = sh;
+		pht[i] = ph_set(i, sh, pht[i]);
 		pthread_mutex_init(&forks[i], NULL);
 		pht[i]->lfork = &forks[i];
-		pht[i]->rfork = (i == (sh->max_ph - 1)) ? &forks[0] :
-			&forks[i + 1];
+		pht[i]->rfork = (i == (sh->max_ph - 1)) ? &forks[0] : &forks[i + 1];
 	}
-	if (sh->apetite != -1)
-		sh->apetite *= sh->max_ph;
 	i = -1;
 	while (++i < sh->max_ph && sh->isdead == 0)
 	{

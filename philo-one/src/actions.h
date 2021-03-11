@@ -17,5 +17,6 @@
 
 short	ph_speak(long ts, int nb, char *message, t_shared *sh);
 long	ph_timest(short status);
+t_philo	*ph_set(int i, t_shared *sh, t_philo *ph);
 
 #endif

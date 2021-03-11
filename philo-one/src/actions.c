@@ -16,8 +16,7 @@
 
 #include "actions.h"
 
-short
-	ph_speak(long ts, int nb, char *message, t_shared *sh)
+short		ph_speak(long ts, int nb, char *message, t_shared *sh)
 {
 	pthread_mutex_lock(&sh->speaks);
 	if (sh->isdead == 1 || sh->apetite == 0)
@@ -30,8 +29,7 @@ short
 	return (0);
 }
 
-long
-	ph_timest(short status)
+long		ph_timest(short status)
 {
 	struct timeval	tv;
 	static long		ftime;
@@ -44,4 +42,20 @@ long
 	}
 	ct = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 	return ((status == 0) ? ftime : ct - ftime);
+}
+
+t_philo		*ph_set(int i, t_shared *sh, t_philo *ph)
+{
+	ph = (t_philo *)malloc(sizeof(t_philo));
+	ph->num = i + 1;
+	ph->isdead = 0;
+	ph->lastate = 0;
+	if (sh->apetite != -1)
+		ph->apetite = sh->apetite;
+	else
+		ph->apetite = -1;
+	ph->shared = sh;
+	if (sh->apetite != -1)
+		sh->apetite *= sh->max_ph;
+	return (ph);
 }
