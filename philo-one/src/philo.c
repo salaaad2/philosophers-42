@@ -25,21 +25,18 @@ static void*
 	ph_check(void *ptr)
 {
 	t_philo			*ph;
-	struct timeval	ctv;
 
 	ph = (t_philo*)ptr;
 	while (ph->shared->isdead == 0)
 	{
 		if (ph->isdead && ph->shared->isdead == 0)
 		{
-			gettimeofday(&ctv, NULL);
 			pthread_mutex_lock(&ph->shared->speaks);
 			ph->shared->isdead = 1;
 			return (NULL);
 		}
 		else if (ph->shared->apetite == 0)
 		{
-			gettimeofday(&ctv, NULL);
 			ph_speak(ph_timest(1), ph->num, PHILO_FULL, ph->shared);
 			pthread_mutex_lock(&ph->shared->speaks);
 			return (NULL);
@@ -143,7 +140,6 @@ void
 	}
 	if (sh->apetite != -1)
 		sh->apetite *= sh->max_ph;
-	printf("%d\n", sh->apetite);
 	i = -1;
 	while (++i < sh->max_ph && sh->isdead == 0)
 	{

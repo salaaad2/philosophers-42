@@ -25,7 +25,7 @@ short
 	{
 		free(pht[i]);
 	}
-	free(sh);
+	free(pht);
 	exit(0);
 	return (1);
 }
@@ -78,7 +78,6 @@ long
 	if (status == 0)
 	{
 		ftime = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
-		printf("time was set : [%ld]", ftime);
 	}
 	ct = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 	return ((status == 0) ? ftime : ct - ftime);
