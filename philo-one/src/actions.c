@@ -10,14 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include <stdio.h>
+#include <sys/time.h>
 #include <stdlib.h>
-#include <pthread.h>
 
-#include "utils.h"
 #include "actions.h"
-#include "philo.h"
 
 short
 	ph_speak(long ts, int nb, char *message, t_shared *sh)
@@ -31,4 +28,20 @@ short
 	printf("%ld %d %s\n", ts, nb, message);
 	pthread_mutex_unlock(&sh->speaks);
 	return (0);
+}
+
+long
+	ph_timest(short status)
+{
+	struct timeval	tv;
+	static long		ftime;
+	long			ct;
+
+	gettimeofday(&tv, NULL);
+	if (status == 0)
+	{
+		ftime = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+	}
+	ct = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+	return ((status == 0) ? ftime : ct - ftime);
 }

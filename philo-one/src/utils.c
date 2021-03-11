@@ -10,11 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/time.h>
+
+#include "actions.h"
+#include "utils.h"
 
 short
 	ph_free(t_shared *sh, t_philo **pht)
@@ -66,22 +68,6 @@ short
 			return (0);
 	}
 	return (1);
-}
-
-long
-	ph_timest(short status)
-{
-	struct timeval	tv;
-	static long		ftime;
-	long			ct;
-
-	gettimeofday(&tv, NULL);
-	if (status == 0)
-	{
-		ftime = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
-	}
-	ct = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
-	return ((status == 0) ? ftime : ct - ftime);
 }
 
 short
