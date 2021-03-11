@@ -31,8 +31,15 @@ short
 short
 	ph_free(t_shared *sh, t_philo **pht)
 {
-	(void)sh;
-	(void)pht;
+	int i;
+
+	i = -1;
+	while (++i < sh->max_ph)
+	{
+		free(pht[i]);
+	}
+	free(pht);
+	exit(0);
 	return (1);
 }
 
