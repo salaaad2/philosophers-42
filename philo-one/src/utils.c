@@ -73,7 +73,7 @@ long
 {
 	struct timeval	tv;
 	static long		ftime;
-	long ct;
+	long			ct;
 
 	gettimeofday(&tv, NULL);
 	if (status == 0)

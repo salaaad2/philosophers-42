@@ -21,8 +21,7 @@
 #include "actions.h"
 #include "philo.h"
 
-static void*
-	ph_check(void *ptr)
+static void		*ph_check(void *ptr)
 {
 	t_philo			*ph;
 
@@ -45,11 +44,10 @@ static void*
 	return (NULL);
 }
 
-int
-ph_lock(t_philo * ph, unsigned int ttw)
+int				ph_lock(t_philo *ph, unsigned int ttw)
 {
-	struct timeval ct;
-	struct timeval lock_start;
+	struct timeval	ct;
+	struct timeval	lock_start;
 
 	gettimeofday(&ct, NULL);
 	gettimeofday(&lock_start, NULL);
@@ -58,7 +56,8 @@ ph_lock(t_philo * ph, unsigned int ttw)
 	{
 		gettimeofday(&ct, NULL);
 		if ((((ct.tv_sec * 1000) + (ct.tv_usec / 1000)) -
-			 ((lock_start.tv_sec * 1000) + (lock_start.tv_usec / 1000))) >= ph->shared->time_to_die)
+			((lock_start.tv_sec * 1000) + (lock_start.tv_usec / 1000))) >=
+			ph->shared->time_to_die)
 		{
 			ph->isdead = 1;
 			return (1);
@@ -67,10 +66,9 @@ ph_lock(t_philo * ph, unsigned int ttw)
 	return (0);
 }
 
-static void*
-	ph_act(void *ptr)
+static void		*ph_act(void *ptr)
 {
-	t_philo *ph;
+	t_philo			*ph;
 
 	ph = (t_philo*)ptr;
 	while (1)
@@ -84,7 +82,7 @@ static void*
 		if (ph->apetite >= 0 && ph_lock(ph, ph->shared->time_to_eat) == 1)
 		{
 			ph_speak(ph_timest(1), ph->num, PHILO_DEATH, ph->shared);
-			break;
+			break ;
 		}
 		if (ph->apetite >= 0 && ph->shared->apetite != -1)
 		{
@@ -92,7 +90,7 @@ static void*
 			ph->shared->apetite -= 1;
 			if (ph->shared->apetite == 0)
 			{
-				break;
+				break ;
 			}
 		}
 		pthread_mutex_unlock(ph->lfork);
@@ -103,15 +101,14 @@ static void*
 		if (ph_lock(ph, ph->shared->time_to_sleep) == 1)
 		{
 			ph_speak(ph_timest(1), ph->num, PHILO_DEATH, ph->shared);
-			break;
+			break ;
 		}
 		ph_speak(ph_timest(1), ph->num, PHILO_THINK, ph->shared);
 	}
 	return (ptr);
 }
 
-void
-	ph_start(t_shared *sh)
+void			ph_start(t_shared *sh)
 {
 	pthread_mutex_t	forks[sh->max_ph];
 	pthread_t		pt;
@@ -150,11 +147,10 @@ void
 	ph_free(sh, pht);
 }
 
-int
-	main(int ac, char *av[])
+int				main(int ac, char *av[])
 {
-	t_shared sh;
-	int i;
+	t_shared		sh;
+	int				i;
 
 	i = 1;
 	if (ac <= 4 || ac >= 7)

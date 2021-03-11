@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_ONE_H
-# define PHILO_ONE_H
+#ifndef PHILO_H
+# define PHILO_H
 
 # define PHILO_EAT "is eating"
 # define PHILO_FULL "All philosophers are full"
