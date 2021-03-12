@@ -30,8 +30,8 @@ static void		*ph_check(void *ptr)
 	{
 		if (ph->isdead && ph->shared->isdead == 0)
 		{
-			ph->shared->isdead = 1;
 			ph_speak(ph_timest(1), ph->num, PHILO_DEATH, ph->shared);
+			ph->shared->isdead = 1;
 			pthread_mutex_lock(&ph->shared->speaks);
 			return (NULL);
 		}
@@ -94,9 +94,12 @@ static void		*ph_act(void *ptr)
 	t_philo			*ph;
 
 	ph = (t_philo*)ptr;
-	while (1)
+	while (ph->shared->isdead == 0)
 	{
-		ph_fork(1, ph);
+		if (ph->shared->isdead == 0)
+			ph_fork(1, ph);
+		else
+			break ;
 		if (ph->apetite >= 0 && ph_lock(ph, ph->shared->time_to_eat) == 1)
 			break ;
 		if (ph->apetite >= 0 && ph->shared->apetite != -1)
@@ -106,7 +109,10 @@ static void		*ph_act(void *ptr)
 			if (ph->shared->apetite == 0)
 				break ;
 		}
-		ph_fork(2, ph);
+		if (ph->shared->isdead == 0)
+			ph_fork(2, ph);
+		else
+			break ;
 		if (ph_lock(ph, ph->shared->time_to_sleep) == 1)
 			break ;
 		ph_speak(ph_timest(1), ph->num, PHILO_THINK, ph->shared);
@@ -128,8 +134,14 @@ void			ph_start(t_shared *sh)
 		pht[i] = ph_set(i, sh, pht[i]);
 		pthread_mutex_init(&forks[i], NULL);
 		pht[i].lfork = &forks[i];
-		pht[i].rfork = (i == (sh->max_ph - 1)) ? &forks[0] : &forks[i + 1];
+		if (sh->max_ph != 1 && sh->max_ph != 2)
+			pht[i].rfork = (i == (sh->max_ph - 1)) ? &forks[0] : &forks[i + 1];
+		else
+		{
+			pht[i].rfork = &forks[i + 1];
+		}
 	}
+	pthread_mutex_init(&sh->speaks, NULL);
 	i = -1;
 	while (++i < sh->max_ph && sh->isdead == 0)
 	{
