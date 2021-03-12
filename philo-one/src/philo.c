@@ -118,30 +118,27 @@ static void		*ph_act(void *ptr)
 
 void			ph_start(t_shared *sh)
 {
-	pthread_mutex_t	forks[sh->max_ph];
+	pthread_mutex_t	forks[255];
 	pthread_t		pt;
-	t_philo			**pht;
+	t_philo			pht[255];
 	int				i;
 
-	if (!(pht = (t_philo **)malloc((sizeof(t_philo*) * sh->max_ph))))
-		return ;
 	sh->forks = (pthread_mutex_t**)&forks;
 	i = -1;
 	while (++i < sh->max_ph)
 	{
 		pht[i] = ph_set(i, sh, pht[i]);
 		pthread_mutex_init(&forks[i], NULL);
-		pht[i]->lfork = &forks[i];
-		pht[i]->rfork = (i == (sh->max_ph - 1)) ? &forks[0] : &forks[i + 1];
+		pht[i].lfork = &forks[i];
+		pht[i].rfork = (i == (sh->max_ph - 1)) ? &forks[0] : &forks[i + 1];
 	}
 	i = -1;
 	while (++i < sh->max_ph && sh->isdead == 0)
 	{
-		pthread_create(&pt, NULL, ph_act, pht[i]);
-		pthread_create(&pt, NULL, ph_check, pht[i]);
+		pthread_create(&pt, NULL, ph_act, &pht[i]);
+		pthread_create(&pt, NULL, ph_check, &pht[i]);
 	}
 	pthread_join(pt, NULL);
-	ph_free(sh, pht);
 }
 
 int				main(int ac, char *av[])

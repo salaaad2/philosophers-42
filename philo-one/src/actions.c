@@ -44,18 +44,17 @@ long		ph_timest(short status)
 	return ((status == 0) ? ftime : ct - ftime);
 }
 
-t_philo		*ph_set(int i, t_shared *sh, t_philo *ph)
+t_philo		ph_set(int i, t_shared *sh, t_philo ph)
 {
-	ph = (t_philo *)malloc(sizeof(t_philo));
-	ph->num = i + 1;
-	ph->isdead = 0;
-	ph->lastate = 0;
+	ph.num = i + 1;
+	ph.isdead = 0;
+	ph.lastate = 0;
 	if (sh->apetite != -1)
-		ph->apetite = sh->apetite;
+		ph.apetite = sh->apetite;
 	else
-		ph->apetite = -1;
-	ph->shared = sh;
-	if (sh->apetite != -1)
+		ph.apetite = -1;
+	ph.shared = sh;
+	if (i == 0 && sh->apetite != -1)
 		sh->apetite *= sh->max_ph;
 	return (ph);
 }
