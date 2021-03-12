@@ -30,8 +30,9 @@ static void		*ph_check(void *ptr)
 	{
 		if (ph->isdead && ph->shared->isdead == 0)
 		{
-			pthread_mutex_lock(&ph->shared->speaks);
 			ph->shared->isdead = 1;
+			ph_speak(ph_timest(1), ph->num, PHILO_DEATH, ph->shared);
+			pthread_mutex_lock(&ph->shared->speaks);
 			return (NULL);
 		}
 		else if (ph->shared->apetite == 0)
@@ -107,10 +108,7 @@ static void		*ph_act(void *ptr)
 		}
 		ph_fork(2, ph);
 		if (ph_lock(ph, ph->shared->time_to_sleep) == 1)
-		{
-			ph_speak(ph_timest(1), ph->num, PHILO_DEATH, ph->shared);
 			break ;
-		}
 		ph_speak(ph_timest(1), ph->num, PHILO_THINK, ph->shared);
 	}
 	return (ptr);
