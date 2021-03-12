@@ -45,20 +45,27 @@ static void		*ph_check(void *ptr)
 	return (NULL);
 }
 
-int				ph_lock(t_philo *ph, unsigned int ttw)
+int				ph_lock(int mode, t_philo *ph, unsigned int ttw)
 {
 	struct timeval	ct;
 	struct timeval	lock_start;
+	long ttd;
 
 	gettimeofday(&ct, NULL);
 	gettimeofday(&lock_start, NULL);
+	if (mode == 1)
+	{
+		ttd = ph->shared->time_to_die - ph->shared->time_to_eat;
+	}
+	else 
+		ttd = ph->shared->time_to_die;
 	while ((((ct.tv_sec * 1000) + (ct.tv_usec / 1000)) -
 			((lock_start.tv_sec * 1000) + (lock_start.tv_usec / 1000))) < ttw)
 	{
 		gettimeofday(&ct, NULL);
 		if ((((ct.tv_sec * 1000) + (ct.tv_usec / 1000)) -
 			((lock_start.tv_sec * 1000) + (lock_start.tv_usec / 1000))) >=
-			ph->shared->time_to_die)
+			ttd)
 		{
 			ph->isdead = 1;
 			return (1);
@@ -100,7 +107,7 @@ static void		*ph_act(void *ptr)
 			ph_fork(1, ph);
 		else
 			break ;
-		if (ph->apetite >= 0 && ph_lock(ph, ph->shared->time_to_eat) == 1)
+		if (ph_lock(0, ph, ph->shared->time_to_eat) == 1)
 			break ;
 		if (ph->apetite >= 0 && ph->shared->apetite != -1)
 		{
@@ -113,7 +120,7 @@ static void		*ph_act(void *ptr)
 			ph_fork(2, ph);
 		else
 			break ;
-		if (ph_lock(ph, ph->shared->time_to_sleep) == 1)
+		if (ph_lock(1, ph, ph->shared->time_to_sleep) == 1)
 			break ;
 		ph_speak(ph_timest(1), ph->num, PHILO_THINK, ph->shared);
 	}

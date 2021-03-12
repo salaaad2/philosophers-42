@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <sys/time.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "actions.h"
 
@@ -24,7 +24,7 @@ short		ph_speak(long ts, int nb, char *message, t_shared *sh)
 		pthread_mutex_lock(&sh->speaks);
 		return (1);
 	}
-	printf("%ld %d %s\n", ts, nb, message);
+	dprintf(1, "%lu %d %s", ts, nb, message);
 	pthread_mutex_unlock(&sh->speaks);
 	return (0);
 }

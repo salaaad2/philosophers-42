@@ -13,13 +13,13 @@
 #ifndef PHILO_H
 # define PHILO_H
 
-# define PHILO_EAT "is eating"
-# define PHILO_FULL "All philosophers are full"
-# define PHILO_FORKT "has taken a fork"
-# define PHILO_FORKP "has put down a fork"
-# define PHILO_SLEEP "is sleeping"
-# define PHILO_THINK "is thinking"
-# define PHILO_DEATH "died"
+# define PHILO_EAT " is eating\n"
+# define PHILO_FULL " All philosophers are full\n"
+# define PHILO_FORKT " has taken a fork\n"
+# define PHILO_FORKP " has put down a fork\n"
+# define PHILO_SLEEP " is sleeping\n"
+# define PHILO_THINK " is thinking\n"
+# define PHILO_DEATH " died\n"
 
 # include <pthread.h>
 # include <stdbool.h>

@@ -14,6 +14,7 @@
 # define ONE_ACTIONS_H
 
 # include "philo.h"
+# include <stdio.h>
 
 short	ph_speak(long ts, int nb, char *message, t_shared *sh);
 long	ph_timest(short status);
