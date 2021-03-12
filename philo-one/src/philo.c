@@ -78,21 +78,33 @@ int				ph_lock(int mode, t_philo *ph, unsigned int ttw)
 void
 	ph_fork(int mode, t_philo *ph)
 {
-	if (mode == 1)
+	if (mode == 1 && ph->shared->isdead == 0)
 	{
-		pthread_mutex_lock(ph->lfork);
-		ph_speak(ph_timest(1), ph->num, PHILO_FORKT, ph->shared);
-		pthread_mutex_lock(ph->rfork);
-		ph_speak(ph_timest(1), ph->num, PHILO_FORKT, ph->shared);
+		if (ph->shared->isdead == 0)
+		{
+			pthread_mutex_lock(ph->lfork);
+			ph_speak(ph_timest(1), ph->num, PHILO_FORKT, ph->shared);
+		}
+		if (ph->shared->isdead == 0)
+		{
+			pthread_mutex_lock(ph->rfork);
+			ph_speak(ph_timest(1), ph->num, PHILO_FORKT, ph->shared);
+		}
 		ph_speak(ph_timest(1), ph->num, PHILO_EAT, ph->shared);
 		ph->lastate = ph_timest(1);
 	}
-	else
+	else if (ph->shared->isdead == 0)
 	{
-		pthread_mutex_unlock(ph->lfork);
-		ph_speak(ph_timest(1), ph->num, PHILO_FORKP, ph->shared);
-		pthread_mutex_unlock(ph->rfork);
-		ph_speak(ph_timest(1), ph->num, PHILO_FORKP, ph->shared);
+		if (ph->shared->isdead == 0)
+		{
+			pthread_mutex_unlock(ph->lfork);
+			ph_speak(ph_timest(1), ph->num, PHILO_FORKP, ph->shared);
+		}
+		if (ph->shared->isdead == 0)
+		{
+			pthread_mutex_unlock(ph->rfork);
+			ph_speak(ph_timest(1), ph->num, PHILO_FORKP, ph->shared);
+		}
 		ph_speak(ph_timest(1), ph->num, PHILO_SLEEP, ph->shared);
 	}
 }
