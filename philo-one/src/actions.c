@@ -19,7 +19,7 @@
 short		ph_speak(long ts, int nb, char *message, t_shared *sh)
 {
 	pthread_mutex_lock(&sh->speaks);
-	if (sh->isdead == 1 || sh->apetite == 0)
+	if (sh->isdead == 1 || sh->allfull == 1)
 	{
 		pthread_mutex_lock(&sh->speaks);
 		return (1);

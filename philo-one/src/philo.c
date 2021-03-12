@@ -35,10 +35,11 @@ static void		*ph_check(void *ptr)
 			pthread_mutex_lock(&ph->shared->speaks);
 			return (NULL);
 		}
-		else if (ph->shared->apetite == 0)
+		else if (ph->shared->apetite == 0 && ph->shared->apetite != -1)
 		{
 			ph_speak(ph_timest(1), ph->num, PHILO_FULL, ph->shared);
 			pthread_mutex_lock(&ph->shared->speaks);
+			ph->shared->allfull = 1;
 			return (NULL);
 		}
 	}
@@ -107,20 +108,20 @@ static void		*ph_act(void *ptr)
 			ph_fork(1, ph);
 		else
 			break ;
-		if (ph_lock(0, ph, ph->shared->time_to_eat) == 1)
+		if (ph->shared->allfull != 1 && ph_lock(0, ph, ph->shared->time_to_eat) == 1)
 			break ;
-		if (ph->apetite >= 0 && ph->shared->apetite != -1)
+		if (ph->shared->allfull != 1)
 		{
 			ph->apetite -= 1;
 			ph->shared->apetite -= 1;
 			if (ph->shared->apetite == 0)
 				break ;
 		}
-		if (ph->shared->isdead == 0)
+		if (ph->shared->isdead == 0 && ph->shared->allfull == 0)
 			ph_fork(2, ph);
 		else
 			break ;
-		if (ph_lock(1, ph, ph->shared->time_to_sleep) == 1)
+		if (ph->shared->allfull != 1 && ph_lock(1, ph, ph->shared->time_to_sleep) == 1)
 			break ;
 		ph_speak(ph_timest(1), ph->num, PHILO_THINK, ph->shared);
 	}
