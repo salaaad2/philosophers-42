@@ -25,14 +25,12 @@ static void		*ph_check(t_philo *ph)
 {
 	int i;
 	int j;
-	int max;
 
-	max = ph[0].shared->max_ph;
 	while (1)
 	{
 		i = -1;
 		j = 0;
-		while (++i < max)
+		while (++i < ph[0].shared->max_ph)
 		{
 			if (!ph[i].apetite)
 				j++;
@@ -63,11 +61,11 @@ static void		*ph_act(void *ptr)
 		pthread_mutex_lock(ph->rfork);
 		ph_speak(ph_timest(), ph->num, PHILO_FORKT, ph->shared);
 		ph_speak(ph_timest(), ph->num, PHILO_EAT, ph->shared);
+		ph->apetite -= 1;
+		ph->ttd = ph_timest() + ph->shared->time_to_die;
+		usleep(ph->shared->time_to_eat * 1000);
 		pthread_mutex_unlock(ph->lfork);
 		pthread_mutex_unlock(ph->rfork);
-		ph->ttd = ph_timest() + ph->shared->time_to_die;
-		ph->apetite -= 1;
-		usleep(ph->shared->time_to_eat * 1000);
 		ph_speak(ph_timest(), ph->num, PHILO_SLEEP, ph->shared);
 		usleep(ph->shared->time_to_sleep * 1000);
 		ph_speak(ph_timest(), ph->num, PHILO_THINK, ph->shared);
@@ -79,7 +77,7 @@ static void		*ph_act(void *ptr)
 void			ph_loop(t_philo *pht)
 {
 	pthread_t		pt[255];
-	int i;
+	int				i;
 
 	i = -1;
 	while (++i < pht[0].shared->max_ph)

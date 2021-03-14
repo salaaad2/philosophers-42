@@ -50,7 +50,5 @@ t_philo		ph_set(int i, t_shared *sh, t_philo ph)
 	else
 		ph.apetite = -1;
 	ph.shared = sh;
-	if (i == 0 && sh->apetite != -1)
-		sh->apetite *= sh->max_ph;
 	return (ph);
 }
