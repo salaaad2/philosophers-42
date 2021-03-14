@@ -16,9 +16,9 @@
 # include "philo.h"
 
 void	ft_putstr(char *str);
+void	ph_exit(t_philo *pht);
 short	ph_isfullnum(char *str);
 int		ph_atoi(char *str);
 short	ph_fills(int ac, char *av[], t_shared *sh);
-short	ph_free(t_shared *sh, t_philo **pht);
 
 #endif

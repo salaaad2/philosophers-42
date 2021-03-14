@@ -43,6 +43,7 @@ typedef struct		s_philo
 	pthread_mutex_t *lfork;
 	pthread_mutex_t *rfork;
 	t_shared		*shared;
+	long			ttd;
 	bool			isdead;
 	bool			isfull;
 	long			lastate;

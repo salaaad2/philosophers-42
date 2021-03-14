@@ -18,19 +18,13 @@
 #include "actions.h"
 #include "utils.h"
 
-short
-	ph_free(t_shared *sh, t_philo **pht)
+void
+	ph_exit(t_philo *pht)
 {
-	int i;
-
-	i = -1;
-	while (++i < sh->max_ph)
-	{
-		free(pht[i]);
-	}
-	free(pht);
+	pthread_mutex_destroy(pht->lfork);
+	pthread_mutex_destroy(pht->rfork);
+	pthread_mutex_destroy(&pht->shared->speaks);
 	exit(0);
-	return (1);
 }
 
 int
@@ -77,7 +71,7 @@ short
 	sh->time_to_die = ph_atoi(av[2]);
 	sh->time_to_eat = ph_atoi(av[3]);
 	sh->time_to_sleep = ph_atoi(av[4]);
-	sh->time = ph_timest(0);
+	sh->time = ph_timest();
 	sh->isdead = 0;
 	if (ac == 6)
 		sh->apetite = ph_atoi(av[5]);

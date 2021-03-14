@@ -18,31 +18,25 @@
 
 short		ph_speak(long ts, int nb, char *message, t_shared *sh)
 {
-	if (sh->isdead == 1 || sh->allfull == 1)
-	{
-		pthread_mutex_unlock(&sh->speaks);
-		dprintf(1, "%lu %d %s", ts, nb, message);
-		return (1);
-	}
 	pthread_mutex_lock(&sh->speaks);
 	dprintf(1, "%lu %d %s", ts, nb, message);
 	pthread_mutex_unlock(&sh->speaks);
 	return (0);
 }
 
-long		ph_timest(short status)
+long		ph_timest(void)
 {
 	struct timeval	tv;
-	static long		ftime;
 	long			ct;
 
 	gettimeofday(&tv, NULL);
-	if (status == 0)
-	{
-		ftime = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
-	}
 	ct = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
-	return ((status == 0) ? ftime : ct - ftime);
+	return (ct);
+}
+
+long		ph_cmptime(long time)
+{
+	return (time < ph_timest());
 }
 
 t_philo		ph_set(int i, t_shared *sh, t_philo ph)
@@ -50,6 +44,7 @@ t_philo		ph_set(int i, t_shared *sh, t_philo ph)
 	ph.num = i + 1;
 	ph.isdead = 0;
 	ph.lastate = 0;
+	ph.ttd = sh->time_to_die + ph_timest();
 	if (sh->apetite != -1)
 		ph.apetite = sh->apetite;
 	else
