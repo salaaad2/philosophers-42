@@ -16,8 +16,7 @@
 
 #include "actions.h"
 
-short
-	ph_sem_init(t_shared *sh, int number)
+short		ph_sem_init(t_shared *sh, int number)
 {
 	if ((sh->forks = sem_open(PHILO_SEMF, O_CREAT, 0777, number)) == SEM_FAILED
 		|| sem_unlink(PHILO_SEMF))

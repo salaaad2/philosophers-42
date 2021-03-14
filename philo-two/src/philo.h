@@ -23,11 +23,9 @@
 # define PHILO_SEMF "/forks"
 # define PHILO_SEMS "/speaks"
 
-
 # include <pthread.h>
 # include <stdbool.h>
 # include <semaphore.h>
-
 
 typedef struct		s_shared
 {
