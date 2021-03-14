@@ -79,7 +79,7 @@ static void		*ph_act(void *ptr)
 void			ph_start(t_shared *sh)
 {
 	pthread_mutex_t	forks[255];
-	pthread_t		pt;
+	pthread_t		pt[255];
 	t_philo			pht[255];
 	int				i;
 
@@ -101,10 +101,10 @@ void			ph_start(t_shared *sh)
 	i = -1;
 	while (++i < sh->max_ph && sh->isdead == 0)
 	{
-		pthread_create(&pt, NULL, ph_act, &pht[i]);
-		pthread_create(&pt, NULL, ph_check, &pht[i]);
+		pthread_create(&pt[i], NULL, ph_act, &pht[i]);
+		pthread_create(&pt[i], NULL, ph_check, &pht[i]);
 	}
-	pthread_join(pt, NULL);
+	pthread_join(pt[i], NULL);
 }
 
 int				main(int ac, char *av[])
