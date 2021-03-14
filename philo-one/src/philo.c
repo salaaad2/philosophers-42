@@ -21,14 +21,12 @@
 #include "actions.h"
 #include "philo.h"
 
-static void		*ph_check(void *ptr)
+static void		*ph_check(t_philo *ph)
 {
 	int i;
 	int j;
 	int max;
-	t_philo *ph;
 
-	ph = (t_philo*)ptr;
 	max = ph[0].shared->max_ph;
 	while (1)
 	{
@@ -58,7 +56,6 @@ static void		*ph_act(void *ptr)
 	t_philo			*ph;
 
 	ph = (t_philo*)ptr;
-	printf("\n\nqweqwe\n\n");
 	while (ph->apetite != 0)
 	{
 		pthread_mutex_lock(ph->lfork);
@@ -66,23 +63,36 @@ static void		*ph_act(void *ptr)
 		pthread_mutex_lock(ph->rfork);
 		ph_speak(ph_timest(), ph->num, PHILO_FORKT, ph->shared);
 		ph_speak(ph_timest(), ph->num, PHILO_EAT, ph->shared);
+		pthread_mutex_unlock(ph->lfork);
+		pthread_mutex_unlock(ph->rfork);
 		ph->ttd = ph_timest() + ph->shared->time_to_die;
 		ph->apetite -= 1;
 		usleep(ph->shared->time_to_eat * 1000);
 		ph_speak(ph_timest(), ph->num, PHILO_SLEEP, ph->shared);
 		usleep(ph->shared->time_to_sleep * 1000);
 		ph_speak(ph_timest(), ph->num, PHILO_THINK, ph->shared);
-		pthread_mutex_unlock(ph->lfork);
-		pthread_mutex_unlock(ph->rfork);
 	}
 	ph->ttd = -1;
 	return (NULL);
 }
 
+void			ph_loop(t_philo *pht)
+{
+	pthread_t		pt[255];
+	int i;
+
+	i = -1;
+	while (++i < pht[0].shared->max_ph)
+	{
+		pthread_create(&pt[i], NULL, ph_act, &pht[i]);
+		pthread_detach(pt[i]);
+		pthread_join(pt[i], NULL);
+	}
+}
+
 void			ph_start(t_shared *sh)
 {
 	pthread_mutex_t	forks[255];
-	pthread_t		pt[255];
 	t_philo			pht[255];
 	int				i;
 
@@ -101,14 +111,8 @@ void			ph_start(t_shared *sh)
 		}
 	}
 	pthread_mutex_init(&sh->speaks, NULL);
-	i = -1;
-	while (++i < sh->max_ph && sh->isdead == 0)
-	{
-		pthread_create(&pt[i], NULL, ph_act, &pht[i]);
-		pthread_detach(pt[i]);
-		pthread_join(pt[i], NULL);
-	}
-	ph_check((void*)pht);
+	ph_loop(pht);
+	ph_check(pht);
 }
 
 int				main(int ac, char *av[])
