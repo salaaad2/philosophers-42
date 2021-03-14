@@ -25,25 +25,27 @@ static void		*ph_check(void *ptr)
 {
 	int i;
 	int j;
+	int max;
 	t_philo *ph;
 
 	ph = (t_philo*)ptr;
+	max = ph[0].shared->max_ph;
 	while (1)
 	{
 		i = -1;
 		j = 0;
-		while (++i < ph->shared->max_ph)
+		while (++i < max)
 		{
-			if (!ph->apetite)
+			if (!ph[i].apetite)
 				j++;
-			if (ph->apetite && ph->ttd >= 0 && ph_cmptime(ph->ttd))
+			if (ph[i].apetite && ph[i].ttd >= 0 && ph_cmptime(ph[i].ttd))
 			{
-				ph_speak(ph_timest(), ph->num, PHILO_DEATH, ph->shared);
+				ph_speak(ph_timest(), ph[i].num, PHILO_DEATH, ph[i].shared);
 				ph_exit(ph);
 			}
-			if (j == ph->shared->max_ph)
+			if (j == ph[i].shared->max_ph)
 			{
-				ph_speak(ph_timest(), ph->num, PHILO_FULL, ph->shared);
+				ph_speak(ph_timest(), ph[i].num, PHILO_FULL, ph[i].shared);
 				ph_exit(ph);
 			}
 		}
@@ -56,6 +58,7 @@ static void		*ph_act(void *ptr)
 	t_philo			*ph;
 
 	ph = (t_philo*)ptr;
+	printf("\n\nqweqwe\n\n");
 	while (ph->apetite != 0)
 	{
 		pthread_mutex_lock(ph->lfork);
@@ -102,9 +105,10 @@ void			ph_start(t_shared *sh)
 	while (++i < sh->max_ph && sh->isdead == 0)
 	{
 		pthread_create(&pt[i], NULL, ph_act, &pht[i]);
-		pthread_create(&pt[i], NULL, ph_check, &pht[i]);
+		pthread_detach(pt[i]);
+		pthread_join(pt[i], NULL);
 	}
-	pthread_join(pt[i], NULL);
+	ph_check((void*)pht);
 }
 
 int				main(int ac, char *av[])
