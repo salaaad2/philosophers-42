@@ -13,20 +13,12 @@
 #ifndef ONE_UTILS_H
 # define ONE_UTILS_H
 
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <sys/time.h>
-
 # include "philo.h"
 
-short	ph_sem_init(t_shared *sh, int number);
 void	ft_putstr(char *str);
+void	ph_exit(t_philo *pht);
 short	ph_isfullnum(char *str);
 int		ph_atoi(char *str);
 short	ph_fills(int ac, char *av[], t_shared *sh);
-long	ph_timest(short status);
-short	ph_free(t_shared *sh, t_philo **pht);
 
 #endif

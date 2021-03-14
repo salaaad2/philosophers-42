@@ -10,22 +10,37 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "utils.h"
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/time.h>
 
-#include "actions.h"
-#include "utils.h"
-
-void
-	ph_exit(t_philo *pht)
+short
+	ph_sem_init(t_shared *sh, int number)
 {
-	sem_unlink(PHILO_SEMF);
-	sem_close(pht->shared->forks);
-	sem_unlink(PHILO_SEMS);
-	sem_close(pht->shared->speaks);
+	if ((sh->forks = sem_open(PHILO_SEMF, O_CREAT, 0777, number)) == SEM_FAILED
+		|| sem_unlink(PHILO_SEMF))
+		return (0);
+	if ((sh->speaks = sem_open(PHILO_SEMS, O_CREAT, 0777, 1)) == SEM_FAILED
+	|| sem_unlink(PHILO_SEMS))
+		return (0);
+	return (1);
+}
+
+short
+	ph_free(t_shared *sh, t_philo **pht)
+{
+	int i;
+
+	i = -1;
+	while (++i < sh->max_ph)
+	{
+		free(pht[i]);
+	}
+	free(pht);
 	exit(0);
+	return (1);
 }
 
 int
@@ -65,6 +80,23 @@ short
 	return (1);
 }
 
+long
+	ph_timest(short status)
+{
+	struct timeval	tv;
+	static long		ftime;
+	long ct;
+
+	gettimeofday(&tv, NULL);
+	if (status == 0)
+	{
+		ftime = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+		printf("time was set : [%ld]", ftime);
+	}
+	ct = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+	return ((status == 0) ? ftime : ct - ftime);
+}
+
 short
 	ph_fills(int ac, char *av[], t_shared *sh)
 {
@@ -72,7 +104,7 @@ short
 	sh->time_to_die = ph_atoi(av[2]);
 	sh->time_to_eat = ph_atoi(av[3]);
 	sh->time_to_sleep = ph_atoi(av[4]);
-	sh->time = ph_timest();
+	sh->time = ph_timest(0);
 	sh->isdead = 0;
 	if (ac == 6)
 		sh->apetite = ph_atoi(av[5]);

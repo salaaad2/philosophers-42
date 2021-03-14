@@ -10,25 +10,57 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
+#include <sys/time.h>
 #include <stdlib.h>
-#include <pthread.h>
+#include <unistd.h>
 
-#include "utils.h"
 #include "actions.h"
-#include "philo.h"
 
 short
-	ph_speak(long ts, int nb, char *message, t_shared *sh)
+	ph_sem_init(t_shared *sh, int number)
+{
+	if ((sh->forks = sem_open(PHILO_SEMF, O_CREAT, 0777, number)) == SEM_FAILED
+		|| sem_unlink(PHILO_SEMF))
+		return (0);
+	if ((sh->speaks = sem_open(PHILO_SEMS, O_CREAT, 0777, 1)) == SEM_FAILED
+	|| sem_unlink(PHILO_SEMS))
+		return (0);
+	return (1);
+}
+
+short		ph_speak(long ts, int nb, char *message, t_shared *sh)
 {
 	sem_wait(sh->speaks);
-	if (sh->isdead == 1 || sh->apetite == 0)
-	{
-		sem_wait(sh->speaks);
-		return (1);
-	}
-	printf("%ld %d %s\n", ts, nb, message);
+	dprintf(1, "%lu %d %s", ts, nb, message);
 	sem_post(sh->speaks);
 	return (0);
+}
+
+long		ph_timest(void)
+{
+	struct timeval	tv;
+	long			ct;
+
+	gettimeofday(&tv, NULL);
+	ct = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+	return (ct);
+}
+
+long		ph_cmptime(long time)
+{
+	return (time < ph_timest());
+}
+
+t_philo		ph_set(int i, t_shared *sh, t_philo ph)
+{
+	ph.num = i + 1;
+	ph.isdead = 0;
+	ph.lastate = 0;
+	ph.ttd = sh->time_to_die + ph_timest();
+	if (sh->apetite != -1)
+		ph.apetite = sh->apetite;
+	else
+		ph.apetite = -1;
+	ph.shared = sh;
+	return (ph);
 }

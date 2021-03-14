@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_one.h                                        :+:      :+:    :+:   */
+/*   philo_two.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmoenne- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/02 14:53:32 by fmoenne-          #+#    #+#             */
-/*   Updated: 2021/03/02 14:53:47 by fmoenne-         ###   ########lyon.fr   */
+/*   Created: 2021/03/02 14:54:53 by fmoenne-          #+#    #+#             */
+/*   Updated: 2021/03/02 14:54:53 by fmoenne-         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#ifndef PHILO_TWO_H
+# define PHILO_TWO_H
 
-# define PHILO_EAT " is eating\n"
-# define PHILO_FULL " All philosophers are full\n"
-# define PHILO_FORKT " has taken a fork\n"
-# define PHILO_FORKP " has put down a fork\n"
-# define PHILO_SLEEP " is sleeping\n"
-# define PHILO_THINK " is thinking\n"
-# define PHILO_DEATH " died\n"
+# define PHILO_EAT "is eating"
+# define PHILO_FULL "All philosophers are full"
+# define PHILO_FORKT "has taken a fork"
+# define PHILO_FORKP "has put down a fork"
+# define PHILO_SLEEP "is sleeping"
+# define PHILO_THINK "is thinking"
+# define PHILO_DEATH "died"
 # define PHILO_SEMF "/forks"
 # define PHILO_SEMS "/speaks"
-
 
 # include <pthread.h>
 # include <stdbool.h>
 # include <semaphore.h>
-
 
 typedef struct		s_shared
 {
@@ -46,7 +44,6 @@ typedef struct		s_shared
 typedef struct		s_philo
 {
 	t_shared		*shared;
-	long			ttd;
 	bool			isdead;
 	bool			isfull;
 	long			lastate;
