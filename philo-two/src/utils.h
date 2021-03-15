@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ONE_UTILS_H
-# define ONE_UTILS_H
+#ifndef UTILS_H
+# define UTILS_H
 
 # include "philo.h"
 

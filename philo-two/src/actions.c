@@ -16,18 +16,20 @@
 
 #include "actions.h"
 
-short		ph_sem_init(t_shared *sh, int number)
+short	ph_sem_init(t_shared *sh, int number)
 {
-	if ((sh->forks = sem_open(PHILO_SEMF, O_CREAT, 0777, number)) == SEM_FAILED
-		|| sem_unlink(PHILO_SEMF))
+	sh->forks = sem_open(PHILO_SEMF, O_CREAT, 0777, number);
+	sem_unlink(PHILO_SEMF);
+	if (sh->forks == SEM_FAILED)
 		return (0);
-	if ((sh->speaks = sem_open(PHILO_SEMS, O_CREAT, 0777, 1)) == SEM_FAILED
-	|| sem_unlink(PHILO_SEMS))
+	sh->speaks = sem_open(PHILO_SEMS, O_CREAT, 0777, 1);
+	sem_unlink(PHILO_SEMS);
+	if (sh->speaks == SEM_FAILED)
 		return (0);
 	return (1);
 }
 
-short		ph_speak(long ts, int nb, char *message, t_shared *sh)
+short	ph_speak(long ts, int nb, char *message, t_shared *sh)
 {
 	sem_wait(sh->speaks);
 	dprintf(1, "%lu %d %s", ts, nb, message);
@@ -35,7 +37,7 @@ short		ph_speak(long ts, int nb, char *message, t_shared *sh)
 	return (0);
 }
 
-long		ph_timest(void)
+long	ph_timest(void)
 {
 	struct timeval	tv;
 	long			ct;
@@ -45,12 +47,12 @@ long		ph_timest(void)
 	return (ct);
 }
 
-long		ph_cmptime(long time)
+long	ph_cmptime(long time)
 {
 	return (time < ph_timest());
 }
 
-t_philo		ph_set(int i, t_shared *sh, t_philo ph)
+t_philo	ph_set(int i, t_shared *sh, t_philo ph)
 {
 	ph.num = i + 1;
 	ph.isdead = 0;
