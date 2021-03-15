@@ -10,21 +10,19 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#define _DEFAULT_SOURCE
 #include <stdlib.h>
 #include <stdio.h>
 #include <pthread.h>
 #include <sys/time.h>
 #include <unistd.h>
-
 #include "utils.h"
 #include "actions.h"
 #include "philo.h"
 
-static void		*ph_check(t_philo *ph)
+static void	*ph_check(t_philo *ph)
 {
-	int i;
-	int j;
+	int		i;
+	int		j;
 
 	while (1)
 	{
@@ -49,7 +47,7 @@ static void		*ph_check(t_philo *ph)
 	return (NULL);
 }
 
-static void		*ph_act(void *ptr)
+static void	*ph_act(void *ptr)
 {
 	t_philo			*ph;
 
@@ -74,7 +72,7 @@ static void		*ph_act(void *ptr)
 	return (NULL);
 }
 
-void			ph_loop(t_philo *pht)
+void	ph_loop(t_philo *pht)
 {
 	pthread_t		pt[255];
 	int				i;
@@ -88,7 +86,7 @@ void			ph_loop(t_philo *pht)
 	}
 }
 
-void			ph_start(t_shared *sh)
+void	ph_start(t_shared *sh)
 {
 	pthread_mutex_t	forks[255];
 	t_philo			pht[255];
@@ -102,7 +100,10 @@ void			ph_start(t_shared *sh)
 		pthread_mutex_init(&forks[i], NULL);
 		pht[i].lfork = &forks[i];
 		if (sh->max_ph != 1 && sh->max_ph != 2)
-			pht[i].rfork = (i == (sh->max_ph - 1)) ? &forks[0] : &forks[i + 1];
+		{
+			if (i == (sh->max_ph - 1))
+				pht[i].rfork = &forks[0];
+		}
 		else
 		{
 			pht[i].rfork = &forks[i + 1];
@@ -113,7 +114,7 @@ void			ph_start(t_shared *sh)
 	ph_check(pht);
 }
 
-int				main(int ac, char *av[])
+int	main(int ac, char *av[])
 {
 	t_shared		sh;
 	int				i;

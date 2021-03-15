@@ -16,7 +16,7 @@
 
 #include "actions.h"
 
-short		ph_speak(long ts, int nb, char *message, t_shared *sh)
+short	ph_speak(long ts, int nb, char *message, t_shared *sh)
 {
 	pthread_mutex_lock(&sh->speaks);
 	dprintf(1, "%lu %d %s", ts, nb, message);
@@ -24,7 +24,7 @@ short		ph_speak(long ts, int nb, char *message, t_shared *sh)
 	return (0);
 }
 
-long		ph_timest(void)
+long	ph_timest(void)
 {
 	struct timeval	tv;
 	long			ct;
@@ -34,12 +34,12 @@ long		ph_timest(void)
 	return (ct);
 }
 
-long		ph_cmptime(long time)
+long	ph_cmptime(long time)
 {
 	return (time < ph_timest());
 }
 
-t_philo		ph_set(int i, t_shared *sh, t_philo ph)
+t_philo	ph_set(int i, t_shared *sh, t_philo ph)
 {
 	ph.num = i + 1;
 	ph.isdead = 0;

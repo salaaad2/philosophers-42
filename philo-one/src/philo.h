@@ -24,7 +24,7 @@
 # include <pthread.h>
 # include <stdbool.h>
 
-typedef struct		s_shared
+typedef struct s_shared
 {
 	pthread_mutex_t	**forks;
 	pthread_mutex_t	speaks;
@@ -38,10 +38,10 @@ typedef struct		s_shared
 	bool			allfull;
 }					t_shared;
 
-typedef struct		s_philo
+typedef struct s_philo
 {
-	pthread_mutex_t *lfork;
-	pthread_mutex_t *rfork;
+	pthread_mutex_t	*lfork;
+	pthread_mutex_t	*rfork;
 	t_shared		*shared;
 	long			ttd;
 	bool			isdead;
