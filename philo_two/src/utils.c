@@ -21,6 +21,7 @@
 void
 	ph_exit(t_philo *pht)
 {
+	sem_wait(pht->shared->speaks);
 	sem_unlink(PHILO_SEMF);
 	sem_close(pht->shared->forks);
 	sem_unlink(PHILO_SEMS);
