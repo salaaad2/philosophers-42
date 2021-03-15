@@ -19,7 +19,7 @@
 #include "actions.h"
 #include "philo.h"
 
-static void	*ph_check(t_philo *ph)
+static void	ph_check(t_philo *ph)
 {
 	int		i;
 	int		j;
@@ -35,16 +35,17 @@ static void	*ph_check(t_philo *ph)
 			if (ph[i].apetite && ph[i].ttd >= 0 && ph_cmptime(ph[i].ttd))
 			{
 				ph_speak(ph_timest(), ph[i].num, PHILO_DEATH, ph[i].shared);
+				pthread_mutex_lock(&ph->shared->speaks);
 				ph_exit(ph);
 			}
 			if (j == ph[i].shared->max_ph)
 			{
 				ph_speak(ph_timest(), ph[i].num, PHILO_FULL, ph[i].shared);
+				pthread_mutex_lock(&ph->shared->speaks);
 				ph_exit(ph);
 			}
 		}
 	}
-	return (NULL);
 }
 
 static void	*ph_act(void *ptr)
@@ -103,11 +104,11 @@ void	ph_start(t_shared *sh)
 		{
 			if (i == (sh->max_ph - 1))
 				pht[i].rfork = &forks[0];
+			else
+				pht[i].rfork = &forks[i + 1];
 		}
 		else
-		{
 			pht[i].rfork = &forks[i + 1];
-		}
 	}
 	pthread_mutex_init(&sh->speaks, NULL);
 	ph_loop(pht);
