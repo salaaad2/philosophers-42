@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#define _DEFAULT_SOURCE
 #include <stdlib.h>
 #include <stdio.h>
 #include <signal.h>
@@ -23,11 +22,11 @@
 #include "actions.h"
 #include "philo.h"
 
-static void		*ph_check(t_philo *ph)
+static void	*ph_check(t_philo *ph)
 {
-	int i;
-	int status;
-	pid_t pid;
+	int		i;
+	int		status;
+	pid_t	pid;
 
 	pid = -1;
 	status = 0;
@@ -53,7 +52,7 @@ static void		*ph_check(t_philo *ph)
 
 void	*ph_fork(void *ptr)
 {
-	t_philo *ph;
+	t_philo	*ph;
 
 	ph = (t_philo*)ptr;
 	while (1)
@@ -62,9 +61,9 @@ void	*ph_fork(void *ptr)
 	return (NULL);
 }
 
-static void		*ph_act(t_philo *ph)
+static void	*ph_act(t_philo *ph)
 {
-	pthread_t p;
+	pthread_t	p;
 
 	pthread_create(&p, NULL, ph_fork, ph);
 	pthread_detach(p);
@@ -90,7 +89,7 @@ static void		*ph_act(t_philo *ph)
 	return (NULL);
 }
 
-static void		ph_loop(t_philo *pht)
+static void	ph_loop(t_philo *pht)
 {
 	int				i;
 
@@ -103,7 +102,7 @@ static void		ph_loop(t_philo *pht)
 	}
 }
 
-void			ph_start(t_shared *sh)
+void	ph_start(t_shared *sh)
 {
 	sem_t			forks;
 	sem_t			speaks;
@@ -123,7 +122,7 @@ void			ph_start(t_shared *sh)
 	exit(0);
 }
 
-int				main(int ac, char *av[])
+int	main(int ac, char *av[])
 {
 	t_shared		sh;
 	int				i;

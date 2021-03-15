@@ -31,7 +31,7 @@ void
 int
 	ph_atoi(char *str)
 {
-	int n;
+	int	n;
 
 	n = 0;
 	if (*str == 0)
@@ -44,7 +44,7 @@ int
 void
 	ft_putstr(char *str)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (str[i])
@@ -54,7 +54,7 @@ void
 short
 	ph_isfullnum(char *str)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (str[++i])

@@ -29,7 +29,7 @@
 # include <sys/types.h>
 # include <unistd.h>
 
-typedef struct		s_shared
+typedef struct s_shared
 {
 	sem_t			*forks;
 	sem_t			*speaks;
@@ -43,7 +43,7 @@ typedef struct		s_shared
 	bool			allfull;
 }					t_shared;
 
-typedef struct		s_philo
+typedef struct s_philo
 {
 	t_shared		*shared;
 	pid_t			pid;

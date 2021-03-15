@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ONE_ACTIONS_H
-# define ONE_ACTIONS_H
+#ifndef ACTIONS_H
+# define ACTIONS_H
 
 # include "philo.h"
 # include <stdio.h>
