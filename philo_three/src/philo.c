@@ -40,9 +40,7 @@ static void	*ph_check(t_philo *ph)
 			if (pid != ph[i].pid)
 				kill(ph[i].pid, SIGKILL);
 			else
-			{
 				ph_speak(ph_timest(), ph[i].num, PHILO_DEATH, ph[i].shared);
-			}
 		}
 	}
 	else
@@ -92,19 +90,6 @@ static void	*ph_act(t_philo *ph)
 	return (NULL);
 }
 
-static void	ph_loop(t_philo *pht)
-{
-	int				i;
-
-	i = -1;
-	while (++i < pht[0].shared->max_ph)
-	{
-		pht[i].pid = fork();
-		if (pht[i].pid == 0)
-			ph_act(&pht[i]);
-	}
-}
-
 void	ph_start(t_shared *sh)
 {
 	sem_t			forks;
@@ -120,7 +105,13 @@ void	ph_start(t_shared *sh)
 		pht[i] = ph_set(i, sh, pht[i]);
 	}
 	ph_sem_init(sh, sh->max_ph);
-	ph_loop(pht);
+	i = -1;
+	while (++i < pht[0].shared->max_ph)
+	{
+		pht[i].pid = fork();
+		if (pht[i].pid == 0)
+			ph_act(&pht[i]);
+	}
 	ph_check(pht);
 	exit(0);
 }
