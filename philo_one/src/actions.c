@@ -19,7 +19,7 @@
 short	ph_speak(long ts, int nb, char *message, t_shared *sh)
 {
 	pthread_mutex_lock(&sh->speaks);
-	dprintf(1, "%lu %d %s", ts, nb, message);
+	printf("%lu %d %s", ts - sh->time, nb, message);
 	pthread_mutex_unlock(&sh->speaks);
 	return (0);
 }
