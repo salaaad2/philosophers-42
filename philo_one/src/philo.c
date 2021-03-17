@@ -23,8 +23,9 @@ static void	ph_check(t_philo *ph)
 {
 	int		i;
 	int		j;
+	bool qwe = false;
 
-	while (1)
+	while (!qwe)
 	{
 		i = -1;
 		j = 0;
@@ -37,12 +38,16 @@ static void	ph_check(t_philo *ph)
 				ph_speak(ph_timest(), ph[i].num, PHILO_DEATH, ph[i].shared);
 				pthread_mutex_lock(&ph->shared->speaks);
 				ph_exit(ph);
+				qwe = true;
+				break ;
 			}
 			if (j == ph[i].shared->max_ph)
 			{
 				ph_speak(ph_timest(), ph[i].num, PHILO_FULL, ph[i].shared);
 				pthread_mutex_lock(&ph->shared->speaks);
 				ph_exit(ph);
+				qwe = true;
+				break ;
 			}
 		}
 	}
@@ -134,7 +139,11 @@ int	main(int ac, char *av[])
 				return (-1);
 			i++;
 		}
-		ph_fills(ac, av, &sh);
+		if (ph_fills(ac, av, &sh) == -1)
+		{
+			dprintf(1, "invalid argument(s)\n");
+			return (1);
+		}
 		ph_start(&sh);
 	}
 	return (0);

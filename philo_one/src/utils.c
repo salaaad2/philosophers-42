@@ -24,7 +24,6 @@ void
 	pthread_mutex_destroy(pht->lfork);
 	pthread_mutex_destroy(pht->rfork);
 	pthread_mutex_destroy(&pht->shared->speaks);
-	exit(0);
 }
 
 int
@@ -77,5 +76,10 @@ short
 		sh->apetite = ph_atoi(av[5]);
 	else
 		sh->apetite = -1;
+	if ((sh->max_ph == 0) ||
+		 (sh->time_to_die == 0) ||
+		 (sh->time_to_eat == 0) ||
+		 (sh->time_to_sleep == 0))
+		return (-1);
 	return (0);
 }
