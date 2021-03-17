@@ -135,7 +135,11 @@ int	main(int ac, char *av[])
 				return (-1);
 			i++;
 		}
-		ph_fills(ac, av, &sh);
+		if (ph_fills(ac, av, &sh) == -1)
+		{
+			dprintf(1, "invalid argument(s)\n");
+			return (1);
+		}
 		ph_start(&sh);
 	}
 	return (0);
