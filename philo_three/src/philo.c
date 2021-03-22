@@ -55,7 +55,7 @@ void	*ph_fork(void *ptr)
 {
 	t_philo	*ph;
 
-	ph = (t_philo*)ptr;
+	ph = (t_philo *)ptr;
 	while (1)
 		if (ph_cmptime(ph->ttd))
 			exit(1);
@@ -97,8 +97,8 @@ void	ph_start(t_shared *sh)
 	t_philo			pht[255];
 	int				i;
 
-	sh->forks = (sem_t*)&forks;
-	sh->speaks = (sem_t*)&speaks;
+	sh->forks = (sem_t *)&forks;
+	sh->speaks = (sem_t *)&speaks;
 	i = -1;
 	while (++i < sh->max_ph)
 	{

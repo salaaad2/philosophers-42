@@ -32,7 +32,7 @@ short	ph_sem_init(t_shared *sh, int number)
 short	ph_speak(long ts, int nb, char *message, t_shared *sh)
 {
 	sem_wait(sh->speaks);
-	dprintf(1, "%lu %d %s", ts, nb, message);
+	dprintf(1, "%lu %d %s", ts - sh->time, nb, message);
 	sem_post(sh->speaks);
 	return (0);
 }

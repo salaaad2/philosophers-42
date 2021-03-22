@@ -36,7 +36,7 @@ typedef struct s_shared
 	unsigned int	time_to_sleep;
 	int				max_ph;
 	int				apetite;
-	int				time;
+	long			time;
 	bool			isdead;
 	bool			allfull;
 }					t_shared;

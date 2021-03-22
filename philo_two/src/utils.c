@@ -21,6 +21,8 @@
 void
 	ph_exit(t_philo *pht)
 {
+	sem_unlink(PHILO_SEMF);
+	sem_unlink(PHILO_SEMS);
 	(void)pht;
 }
 
@@ -74,10 +76,10 @@ short
 		sh->apetite = ph_atoi(av[5]);
 	else
 		sh->apetite = -1;
-	if ((sh->max_ph == 0) ||
-		 (sh->time_to_die == 0) ||
-		 (sh->time_to_eat == 0) ||
-		 (sh->time_to_sleep == 0))
+	if ((sh->max_ph == 0)
+		|| (sh->time_to_die == 0)
+		|| (sh->time_to_eat == 0)
+		|| (sh->time_to_sleep == 0))
 		return (-1);
 	return (0);
 }

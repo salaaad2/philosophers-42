@@ -24,9 +24,8 @@ static void	*ph_check(t_philo *ph)
 {
 	int	i;
 	int	j;
-	bool qwe = false;
 
-	while (!qwe)
+	while (!ph->isdead)
 	{
 		i = -1;
 		j = 0;
@@ -37,19 +36,16 @@ static void	*ph_check(t_philo *ph)
 			if (ph[i].apetite && ph[i].ttd >= 0 && ph_cmptime(ph[i].ttd))
 			{
 				ph_speak(ph_timest(), ph[i].num, PHILO_DEATH, ph[i].shared);
-				ph_exit(ph);
-				qwe = true;
-				break ;
+				ph->isdead = true;
 			}
 			if (j == ph[i].shared->max_ph)
 			{
 				ph_speak(ph_timest(), ph[i].num, PHILO_FULL, ph[i].shared);
-				ph_exit(ph);
-				qwe = true;
-				break ;
+				ph->isdead = true;
 			}
 		}
 	}
+	ph_exit(ph);
 	return (NULL);
 }
 
@@ -57,7 +53,7 @@ static void	*ph_act(void *ptr)
 {
 	t_philo			*ph;
 
-	ph = (t_philo*)ptr;
+	ph = (t_philo *)ptr;
 	while (ph->apetite != 0)
 	{
 		sem_wait(ph->shared->forks);
@@ -99,8 +95,8 @@ void	ph_start(t_shared *sh)
 	t_philo			pht[255];
 	int				i;
 
-	sh->forks = (sem_t*)&forks;
-	sh->speaks = (sem_t*)&speaks;
+	sh->forks = (sem_t *)&forks;
+	sh->speaks = (sem_t *)&speaks;
 	i = -1;
 	while (++i < sh->max_ph)
 	{
